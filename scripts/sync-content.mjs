@@ -29,6 +29,7 @@ const requiredFiles = {
 };
 const optionalFiles = {
   articles: source("01_网站资料清单", "04_公众号文章精选.md"),
+  catalog: source("02_网站结构与文案", "04_课程分类与目录.md"),
 };
 
 for (const [name, filePath] of Object.entries(requiredFiles)) {
@@ -142,6 +143,26 @@ const trustHeading = findHeading(homepageDoc, "信任资产");
 const valuesHeading = findHeading(homepageDoc, "价值表达");
 const conversionHeading = findHeading(homepageDoc, "转化入口");
 
+// 课程全景目录（可选文件）
+let catalog = [];
+if (fs.existsSync(optionalFiles.catalog)) {
+  const catalogDoc = readDocument(optionalFiles.catalog);
+  const catalogParent = findHeading(catalogDoc, "课程目录");
+  if (catalogParent) {
+    catalog = childHeadings(catalogDoc, catalogParent).map((heading) => {
+      const categoryName = heading.title.replace(/篇$/, "");
+      const rows = table(sectionLines(catalogDoc, heading));
+      return {
+        name: categoryName,
+        color: COURSE_CATEGORY_COLORS[categoryName] || "muted",
+        courses: rows
+          .map((r) => cleanInline(r["课程名称"] || "").replace(/^《|》$/g, ""))
+          .filter(Boolean),
+      };
+    });
+  }
+}
+
 // 公众号文章（可选文件，缺失不报错）
 const CATEGORY_COLORS = { "产业园区": "blue", "AI落地": "brass", "产业研究": "muted" };
 let insights = [];
@@ -241,6 +262,7 @@ const siteData = {
     wechat: contactMap["微信"] || "",
     account: contactMap["公众号"] || "",
   },
+  catalog,
   insights,
   stickers: stickerFiles,
   decisions,
