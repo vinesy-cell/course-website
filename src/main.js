@@ -67,22 +67,27 @@ function renderHero(data) {
     </div>
   `;
 
-  // 若有本周贴图，用滚动图片带替换 hero 静态图
+  // 若有本周贴图，用逐张淡入淡出轮播替换 hero 静态图
   if (data.stickers && data.stickers.length > 0) {
     visual.classList.add("sticker-mode");
-    const items = data.stickers
+    const slides = data.stickers
       .map(
-        (f) =>
-          `<img src="./assets/stickers/${encodeURIComponent(f)}" alt="公众号配图" loading="lazy" />`,
+        (f, i) =>
+          `<div class="sticker-slide${i === 0 ? " is-active" : ""}">
+            <img src="./assets/stickers/${encodeURIComponent(f)}" alt="公众号配图" loading="${i === 0 ? "eager" : "lazy"}" />
+          </div>`,
       )
       .join("");
-    visual.innerHTML = `
-      <div class="sticker-track-wrap">
-        <div class="sticker-track">
-          ${items}${items}
-        </div>
-      </div>
-    `;
+    visual.innerHTML = `<div class="sticker-slideshow">${slides}</div>`;
+
+    // 每 4 秒切换一张，淡入淡出
+    let current = 0;
+    const slideEls = visual.querySelectorAll(".sticker-slide");
+    setInterval(() => {
+      slideEls[current].classList.remove("is-active");
+      current = (current + 1) % slideEls.length;
+      slideEls[current].classList.add("is-active");
+    }, 4000);
   }
 }
 

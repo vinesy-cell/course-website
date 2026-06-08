@@ -285,39 +285,35 @@ img {
   border-right: 0;
 }
 
-/* ─── Hero 贴图滚动带 ──────────────────────────────────── */
-.sticker-track-wrap {
-  overflow: hidden;
+/* ─── Hero 贴图逐张展示 ─────────────────────────────────── */
+.sticker-slideshow {
+  position: relative;
+  width: 100%;
+  min-height: 420px;
   border-radius: 10px;
   box-shadow: var(--shadow);
-  /* 两侧渐隐，让滚动更自然 */
-  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  overflow: hidden;
+  background: var(--surface);
 }
 
-.sticker-track {
-  display: flex;
-  gap: 10px;
-  width: max-content;
-  animation: sticker-scroll 24s linear infinite;
+.sticker-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.9s ease-in-out;
+  pointer-events: none;
 }
 
-.sticker-track:hover {
-  animation-play-state: paused;
+.sticker-slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.sticker-track img {
-  height: 300px;
-  width: auto;
-  border-radius: 8px;
+.sticker-slide img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
-  flex-shrink: 0;
-}
-
-@keyframes sticker-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
 }
 
 /* 轮播模式下隐藏金色装饰边框 */
@@ -999,8 +995,8 @@ img {
     min-height: 260px;
   }
 
-  .sticker-track img {
-    height: 180px;
+  .sticker-slideshow {
+    min-height: 260px;
   }
 
   .pain-list,
