@@ -216,10 +216,11 @@ img {
   max-width: 680px;
   margin: 0 0 var(--sp-3);
   font-family: "Songti SC", "STSong", Georgia, serif;
-  font-size: clamp(32px, 4.5vw, 60px);
+  font-size: clamp(30px, 4.2vw, 52px);
   font-weight: 600;
-  line-height: 1.18;
-  letter-spacing: -0.03em;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 .hero-subtitle {
