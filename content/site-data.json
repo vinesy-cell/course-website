@@ -3,15 +3,16 @@
     "siteName": "李凯思考笔记",
     "title": "AI进入企业和园区业务现场的实战课程与工作坊",
     "description": "不是再学一个 AI 工具，而是把 AI 放进企业经营、团队协同、园区招商和产业服务的真实任务里，形成可落地、可复用、能持续创造成果的组织能力。",
-    "syncedAt": "2026-06-08T13:45:20.432Z",
+    "syncedAt": "2026-06-08T13:52:28.493Z",
     "sourceRoot": "/Users/maxlee/Documents/LK ThinkNote/07_课程网站",
-    "publicPrices": false
+    "publicPrices": true
   },
   "navigation": [
     "课程方案",
     "场景工作坊",
     "合作方式",
     "讲师介绍",
+    "思想与洞察",
     "联系"
   ],
   "hero": {
@@ -272,6 +273,7 @@
     "wechat": "李凯 LI Kai",
     "account": "李凯思考笔记"
   },
+  "insights": [],
   "decisions": {
     "网站主标题": "AI进入企业和园区业务现场的实战课程与工作坊",
     "核心差异": "不是再学一个 AI 工具，而是把 AI 放进真实工作流和业务场景",

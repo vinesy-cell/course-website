@@ -22,6 +22,7 @@ const navigationTargets = {
   场景工作坊: "#delivery",
   合作方式: "#cooperation",
   讲师介绍: "#instructor",
+  思想与洞察: "#insights",
   联系: "#contact",
 };
 
@@ -182,7 +183,7 @@ function renderInstructor(data) {
   const section = document.querySelector("#instructor");
   section.innerHTML = `
     <div class="instructor-copy">
-      ${sectionHeader("05 / 讲师介绍", "从园区与组织实践出发，让 AI 进入业务现场")}
+      ${sectionHeader("06 / 讲师介绍", "从园区与组织实践出发，让 AI 进入业务现场")}
       ${data.instructor.paragraphs.map((item) => `<p>${escapeHtml(item)}</p>`).join("")}
       <p>${escapeHtml(data.instructor.research)}</p>
       <ul class="credential-list">
@@ -197,12 +198,44 @@ function renderInstructor(data) {
   `;
 }
 
+function renderInsights(data) {
+  const section = document.querySelector("#insights");
+  if (!data.insights || data.insights.length === 0) {
+    section.hidden = true;
+    return;
+  }
+  section.innerHTML = `
+    ${sectionHeader("06 / 思想与洞察", "产业园区与 AI 落地的持续研究与观察")}
+    <div class="insight-grid">
+      ${data.insights
+        .map(
+          (item) => `
+            <a class="insight-card" href="${escapeHtml(item.url)}" target="_blank" rel="noopener">
+              <div class="insight-meta">
+                <span class="insight-tag insight-tag--${escapeHtml(item.color)}">${escapeHtml(item.category)}</span>
+                <span class="insight-date">${escapeHtml(item.date)}</span>
+              </div>
+              <h3>${escapeHtml(item.title)}</h3>
+              ${item.excerpt ? `<p>${escapeHtml(item.excerpt)}</p>` : ""}
+              <span class="insight-read">阅读全文 →</span>
+            </a>
+          `,
+        )
+        .join("")}
+    </div>
+    <p class="insight-follow">
+      更多内容见公众号
+      <strong>「李凯思考笔记」</strong>
+    </p>
+  `;
+}
+
 function renderContact(data) {
   const section = document.querySelector("#contact");
   section.innerHTML = `
     <div class="contact-layout">
       <div>
-        ${sectionHeader("06 / 联系", "先把一个真实问题说清楚")}
+        ${sectionHeader("08 / 联系", "先把一个真实问题说清楚")}
         <p>${escapeHtml(data.conversion.paragraphs[0] || "")}</p>
         <div class="contact-links">
           <a href="tel:${escapeHtml(data.contacts.phone)}"><span>电话</span><strong>${escapeHtml(data.contacts.phone)}</strong></a>
@@ -260,6 +293,7 @@ async function main() {
   renderDelivery(data);
   renderCooperation(data);
   renderInstructor(data);
+  renderInsights(data);
   renderContact(data);
   document.querySelector("#sync-note").textContent =
     `内容更新时间：${new Date(data.meta.syncedAt).toLocaleString("zh-CN")}`;

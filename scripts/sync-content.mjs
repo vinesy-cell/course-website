@@ -27,6 +27,9 @@ const requiredFiles = {
   homepage: source("02_网站结构与文案", "02_首页内容骨架.md"),
   contacts: source("01_网站资料清单", "02_公开联系方式与二维码.md"),
 };
+const optionalFiles = {
+  articles: source("01_网站资料清单", "04_公众号文章精选.md"),
+};
 
 for (const [name, filePath] of Object.entries(requiredFiles)) {
   if (!fs.existsSync(filePath)) {
@@ -119,6 +122,25 @@ const trustHeading = findHeading(homepageDoc, "信任资产");
 const valuesHeading = findHeading(homepageDoc, "价值表达");
 const conversionHeading = findHeading(homepageDoc, "转化入口");
 
+// 公众号文章（可选文件，缺失不报错）
+const CATEGORY_COLORS = { "产业园区": "blue", "AI落地": "brass", "产业研究": "muted" };
+let insights = [];
+if (fs.existsSync(optionalFiles.articles)) {
+  const articlesDoc = readDocument(optionalFiles.articles);
+  const allRows = table(articlesDoc.lines || articlesDoc);
+  insights = allRows
+    .filter((row) => row["链接"] && row["链接"].trim() && row["链接"].trim() !== "（待填入）")
+    .slice(0, 6)
+    .map((row) => ({
+      title: cleanInline(row["标题"] || ""),
+      url: row["链接"].trim(),
+      category: cleanInline(row["分类"] || ""),
+      color: CATEGORY_COLORS[row["分类"]?.trim()] || "muted",
+      date: cleanInline(row["日期"] || ""),
+      excerpt: cleanInline(row["摘要"] || ""),
+    }));
+}
+
 const contactHeading = findHeading(contactsDoc, "对外联系方式");
 const contactRows = table(sectionLines(contactsDoc, contactHeading));
 const contactMap = Object.fromEntries(
@@ -140,7 +162,7 @@ const siteData = {
     sourceRoot: config.contentRoot,
     publicPrices: Boolean(config.publicPrices),
   },
-  navigation: ["课程方案", "场景工作坊", "合作方式", "讲师介绍", "联系"],
+  navigation: ["课程方案", "场景工作坊", "合作方式", "讲师介绍", "思想与洞察", "联系"],
   hero: {
     title: heroValue("H1") || decisions["网站主标题"] || config.siteTitle,
     tagline: heroValue("顶部标语"),
@@ -190,6 +212,7 @@ const siteData = {
     wechat: contactMap["微信"] || "",
     account: contactMap["公众号"] || "",
   },
+  insights,
   decisions,
   pending,
   assets,

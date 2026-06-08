@@ -616,6 +616,84 @@ img {
   object-fit: contain;
 }
 
+/* ─── 思想与洞察 ─────────────────────────────────────── */
+.insight-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: var(--sp-6);
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.insight-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(20px, 2.2vw, 32px);
+  background: var(--paper-strong);
+  transition: background 180ms ease;
+}
+
+.insight-card:hover {
+  background: var(--blue-soft);
+}
+
+.insight-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.insight-tag {
+  padding: 3px 9px;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.insight-tag--blue   { background: var(--blue-soft); color: var(--blue-dark); }
+.insight-tag--brass  { background: var(--brass-soft); color: var(--brass); }
+.insight-tag--muted  { background: var(--line); color: var(--muted); }
+
+.insight-date {
+  color: var(--muted);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
+.insight-card h3 {
+  margin: 0;
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-size: clamp(15px, 1.3vw, 18px);
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.insight-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  flex: 1;
+}
+
+.insight-read {
+  margin-top: auto;
+  color: var(--blue);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.insight-follow {
+  margin-top: var(--sp-4);
+  color: var(--muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
 /* ─── 联系区块 ──────────────────────────────────────── */
 .contact {
   width: 100%;
@@ -783,6 +861,10 @@ img {
 
   .plan {
     min-height: auto;
+  }
+
+  .insight-grid {
+    grid-template-columns: 1fr;
   }
 }
 
