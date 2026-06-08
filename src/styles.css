@@ -404,6 +404,71 @@ img {
   line-height: 1.7;
 }
 
+/* ─── 课程全景目录 ──────────────────────────────────── */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: var(--sp-5);
+}
+
+.catalog-card {
+  padding: 20px 22px 22px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.07);
+  border-top: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.catalog-card--blue  { border-top-color: var(--blue-mid, #5b9bd5); }
+.catalog-card--brass { border-top-color: var(--brass); }
+.catalog-card--muted { border-top-color: rgba(255, 255, 255, 0.35); }
+
+.catalog-category {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.catalog-card--blue  .catalog-category { color: var(--blue-mid, #88b8e8); }
+.catalog-card--brass .catalog-category { color: var(--brass); }
+
+.catalog-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.catalog-list li {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+  padding-left: 14px;
+  position: relative;
+}
+
+.catalog-list li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ─── 课程详情子标题 ─────────────────────────────────── */
+.courses-sublabel {
+  margin: 0 0 var(--sp-4);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
 /* ─── 课程模块 ──────────────────────────────────────── */
 .course-block {
   display: grid;
@@ -957,6 +1022,10 @@ img {
   .insight-grid {
     grid-template-columns: 1fr;
   }
+
+  .catalog-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ─── 响应式：小屏 (≤ 680px) ─────────────────────────── */
@@ -1011,6 +1080,10 @@ img {
   .credential-list,
   .qr-grid {
     grid-template-columns: 1fr;
+  }
+
+  .catalog-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .pain-item:nth-child(odd),

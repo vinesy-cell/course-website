@@ -27,7 +27,7 @@ const sectionHeader = (label, title, intro = "") => `
 `;
 
 const navigationTargets = {
-  课程方案: "#courses",
+  课程方案: "#topics",
   场景工作坊: "#delivery",
   合作方式: "#cooperation",
   讲师介绍: "#instructor",
@@ -110,18 +110,24 @@ function renderPain(data) {
   `;
 }
 
-function renderRecommendations(data) {
+function renderCourseCatalog(data) {
   const section = document.querySelector("#topics");
+  if (!data.catalog || data.catalog.length === 0) {
+    section.hidden = true;
+    return;
+  }
   section.innerHTML = `
-    ${sectionHeader("02 / 推荐主题", "从趋势判断，到产业与组织行动")}
-    <div class="recommendation-list">
-      ${data.recommendations
+    ${sectionHeader("02 / 课程全景", "从认知建立到场景落地，按业务方向选择适合的课程")}
+    <div class="catalog-grid">
+      ${data.catalog
         .map(
-          (item) => `
-            <article class="recommendation-item">
-              <h3>${escapeHtml(item["主题"])}</h3>
-              <p>${escapeHtml(item["价值表达"])}</p>
-            </article>
+          (cat) => `
+            <div class="catalog-card catalog-card--${escapeHtml(cat.color)}">
+              <p class="catalog-category">${escapeHtml(cat.name)}</p>
+              <ul class="catalog-list">
+                ${cat.courses.map((c) => `<li>${escapeHtml(c)}</li>`).join("")}
+              </ul>
+            </div>
           `,
         )
         .join("")}
@@ -131,7 +137,8 @@ function renderRecommendations(data) {
 
 function renderCourses(data) {
   const section = document.querySelector("#courses");
-  section.innerHTML = data.courses
+  const header = `<p class="courses-sublabel">精选展开 · 适合对象 · 交付成果</p>`;
+  section.innerHTML = header + data.courses
     .map(
       (course, index) => `
         <article class="course-block" data-reveal>
@@ -330,7 +337,7 @@ async function main() {
   renderNavigation(data);
   renderHero(data);
   renderPain(data);
-  renderRecommendations(data);
+  renderCourseCatalog(data);
   renderCourses(data);
   renderDelivery(data);
   renderCooperation(data);
