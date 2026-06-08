@@ -80,14 +80,14 @@ function renderHero(data) {
       .join("");
     visual.innerHTML = `<div class="sticker-slideshow">${slides}</div>`;
 
-    // 每 4 秒切换一张，淡入淡出
+    // 每 7 秒切换一张（含 1 秒淡入，静止展示约 6 秒）
     let current = 0;
     const slideEls = visual.querySelectorAll(".sticker-slide");
     setInterval(() => {
       slideEls[current].classList.remove("is-active");
       current = (current + 1) % slideEls.length;
       slideEls[current].classList.add("is-active");
-    }, 4000);
+    }, 7000);
   }
 }
 

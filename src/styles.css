@@ -289,7 +289,7 @@ img {
 .sticker-slideshow {
   position: relative;
   width: 100%;
-  min-height: 420px;
+  aspect-ratio: 3 / 4;   /* 匹配竖版贴图比例，完整显示 */
   border-radius: 10px;
   box-shadow: var(--shadow);
   overflow: hidden;
@@ -300,7 +300,7 @@ img {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.9s ease-in-out;
+  transition: opacity 1s ease-in-out;
   pointer-events: none;
 }
 
@@ -996,7 +996,7 @@ img {
   }
 
   .sticker-slideshow {
-    min-height: 260px;
+    aspect-ratio: 3 / 4;
   }
 
   .pain-list,
