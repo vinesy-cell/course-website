@@ -286,44 +286,43 @@ img {
   border-right: 0;
 }
 
-/* ─── Hero 贴图逐张展示 ─────────────────────────────────── */
-.sticker-slideshow {
-  position: relative;
-  width: 100%;
-  /* 高度贴合文字列，不撑破版面 */
-  height: clamp(360px, 48vh, 500px);
+/* ─── Hero 贴图横向滚动带 ──────────────────────────────── */
+.sticker-track-wrap {
+  overflow: hidden;
   border-radius: 12px;
   box-shadow: var(--shadow);
-  overflow: hidden;
-  /* 贴图背景为纯白，与暖白页面自然融合 */
-  background: #fff;
+  height: clamp(360px, 44vh, 460px);
+  /* 两侧柔光渐隐 */
+  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
 }
 
-.sticker-slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  pointer-events: none;
+.sticker-track {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sticker-slide.is-active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.sticker-slide img {
-  width: 100%;
+  gap: 6px;
   height: 100%;
-  /* contain：完整显示竖版贴图，不裁切 */
-  object-fit: contain;
-  display: block;
+  width: max-content;
+  animation: sticker-scroll 52s linear infinite;
 }
 
-/* 轮播模式下隐藏金色装饰边框 */
+.sticker-track:hover {
+  animation-play-state: paused;
+}
+
+.sticker-track img {
+  height: 100%;
+  width: auto;
+  display: block;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+@keyframes sticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* 滚动带模式下隐藏金色装饰边框 */
 .hero-visual.sticker-mode::before {
   display: none;
 }
