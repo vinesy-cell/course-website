@@ -6,6 +6,15 @@ const escapeHtml = (value = "") =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 
+// 先转义，再对关键词加高亮标记（安全：HTML已转义后才插入span）
+const highlight = (text) =>
+  escapeHtml(text)
+    .replace(/\bAI\b/g, '<span class="kw">AI</span>')
+    .replace(/浙江大学/g, '<span class="kw">浙江大学</span>')
+    .replace(/副总裁/g, '<span class="kw">副总裁</span>')
+    .replace(/MBA/g, '<span class="kw">MBA</span>')
+    .replace(/19年/g, '<span class="kw">19年</span>');
+
 const list = (items = []) =>
   `<ul class="clean-list">${items
     .map((item) => `<li>${escapeHtml(item)}</li>`)
@@ -104,7 +113,7 @@ function renderCourses(data) {
         <article class="course-block" data-reveal>
           <div>
             <span class="course-index">${String(index + 1).padStart(2, "0")}</span>
-            <h3>${escapeHtml(course.title)}</h3>
+            <h3>《${escapeHtml(course.title)}》</h3>
             <p>${escapeHtml(course.description)}</p>
           </div>
           <div class="course-details">
@@ -130,14 +139,20 @@ function renderDelivery(data) {
     <div class="delivery-grid">
       <div class="delivery-steps">
         ${data.delivery.formats
-          .map(
-            (item, index) => `
+          .map((item, index) => {
+            const sep = item.indexOf("：");
+            const name = sep > -1 ? item.slice(0, sep) : item;
+            const desc = sep > -1 ? item.slice(sep + 1) : "";
+            return `
               <div class="delivery-step">
                 <span>${String(index + 1).padStart(2, "0")}</span>
-                <div>${escapeHtml(item)}</div>
+                <div>
+                  <strong class="delivery-format-name">${escapeHtml(name)}</strong>
+                  ${desc ? `<p class="delivery-format-desc">${escapeHtml(desc)}</p>` : ""}
+                </div>
               </div>
-            `,
-          )
+            `;
+          })
           .join("")}
       </div>
       <div class="delivery-table">
@@ -184,9 +199,10 @@ function renderInstructor(data) {
   const section = document.querySelector("#instructor");
   section.innerHTML = `
     <div class="instructor-copy">
-      ${sectionHeader("06 / 讲师介绍", "从园区与组织实践出发，让 AI 进入业务现场")}
-      ${data.instructor.paragraphs.map((item) => `<p>${escapeHtml(item)}</p>`).join("")}
-      <p>${escapeHtml(data.instructor.research)}</p>
+      ${sectionHeader("05 / 讲师介绍", "从园区与组织实践出发，让 AI 进入业务现场")}
+      ${data.instructor.paragraphs.map((item) => `<p>${highlight(item)}</p>`).join("")}
+      <p class="instructor-research">${escapeHtml(data.instructor.research)}</p>
+      <p class="credentials-label">部分认证与专业背书</p>
       <ul class="credential-list">
         ${data.instructor.credentials
           .map((item) => `<li>${escapeHtml(item)}</li>`)
@@ -194,7 +210,7 @@ function renderInstructor(data) {
       </ul>
     </div>
     <figure class="poster-frame">
-      <img src="./assets/${encodeURIComponent(data.assets.coursePoster)}" alt="李凯课程介绍海报" />
+      <img src="./assets/${encodeURIComponent(data.assets.coursePoster)}" alt="李凯讲师海报" />
     </figure>
   `;
 }
@@ -236,7 +252,7 @@ function renderContact(data) {
   section.innerHTML = `
     <div class="contact-layout">
       <div>
-        ${sectionHeader("08 / 联系", "先把一个真实问题说清楚")}
+        ${sectionHeader("07 / 联系", "先把一个真实问题说清楚")}
         <p>${escapeHtml(data.conversion.paragraphs[0] || "")}</p>
         <div class="contact-links">
           <a href="tel:${escapeHtml(data.contacts.phone)}"><span>电话</span><strong>${escapeHtml(data.contacts.phone)}</strong></a>
@@ -250,7 +266,7 @@ function renderContact(data) {
         </div>
         <div class="qr-card">
           <img src="./assets/${encodeURIComponent(data.assets.accountQr)}" alt="李凯思考笔记公众号二维码" />
-          <span>关注“李凯思考笔记”</span>
+          <span>关注「李凯思考笔记」</span>
         </div>
       </div>
     </div>

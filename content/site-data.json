@@ -3,7 +3,7 @@
     "siteName": "李凯思考笔记",
     "title": "AI进入企业和园区业务现场的实战课程与工作坊",
     "description": "不是再学一个 AI 工具，而是把 AI 放进企业经营、团队协同、园区招商和产业服务的真实任务里，形成可落地、可复用、能持续创造成果的组织能力。",
-    "syncedAt": "2026-06-08T13:53:52.315Z",
+    "syncedAt": "2026-06-08T13:57:34.571Z",
     "sourceRoot": "/Users/maxlee/Documents/LK ThinkNote/07_课程网站",
     "publicPrices": true
   },
@@ -276,7 +276,56 @@
     "wechat": "李凯 LI Kai",
     "account": "李凯思考笔记"
   },
-  "insights": [],
+  "insights": [
+    {
+      "title": "企业上AI最难的，不是买工具，而是重新分配工作",
+      "url": "https://mp.weixin.qq.com/s/KUFA2ypPmaUpUVSHttVuvQ",
+      "category": "AI落地",
+      "color": "brass",
+      "date": "2026-05-22",
+      "excerpt": "很多企业谈AI，已经不再停留在\"要不要用\"，卡住的往往是怎么真正把工作重新分配。"
+    },
+    {
+      "title": "从\"知道AI\"到\"让AI真正走进业务现场\"",
+      "url": "https://mp.weixin.qq.com/s/j5-A6BffYqDcFIf1o5ldFQ",
+      "category": "AI落地",
+      "color": "brass",
+      "date": "2026-05-21",
+      "excerpt": "真正有价值的，不只是学会几个工具，而是思考如何让AI进入真实业务场景。"
+    },
+    {
+      "title": "未来园区最值钱的，可能不是空间，而是企业的外部操作系统",
+      "url": "https://mp.weixin.qq.com/s/aFWVv1gErH3um4A0qbn7jA",
+      "category": "产业园区",
+      "color": "blue",
+      "date": "2026-05-20",
+      "excerpt": "空间是硬件，企业真正依赖的是一套能降低运营摩擦、提供外部能力的服务体系。"
+    },
+    {
+      "title": "园区公司开始用AI，最该先接住的不是写材料，而是运营里的重复判断",
+      "url": "https://mp.weixin.qq.com/s/B39omR6YD0MjizRXr9siNA",
+      "category": "AI落地",
+      "color": "brass",
+      "date": "2026-05-15",
+      "excerpt": "写材料只是AI的入门用法，运营里大量重复的判断，才是真正值得AI接手的地方。"
+    },
+    {
+      "title": "未来的园区服务，不是做活动，而是把企业留下来的理由做成产品",
+      "url": "https://mp.weixin.qq.com/s/QS2ZQql5xK_mviCEyhbncw",
+      "category": "产业园区",
+      "color": "blue",
+      "date": "2026-05-13",
+      "excerpt": "服务做了不少，企业未必真的更依赖园区。能留住企业的，是让它觉得离开就会失去的东西。"
+    },
+    {
+      "title": "园区招商最该补的，不是资源，而是对企业经营的理解",
+      "url": "https://mp.weixin.qq.com/s/eT3jVDTHgW6lighW9N2dCA",
+      "category": "产业园区",
+      "color": "blue",
+      "date": "2026-05-11",
+      "excerpt": "资源讲完以后，企业还是没有被打动——问题往往不是政策不够，而是没搞清楚企业在经营什么。"
+    }
+  ],
   "decisions": {
     "网站主标题": "AI进入企业和园区业务现场的实战课程与工作坊",
     "核心差异": "不是再学一个 AI 工具，而是把 AI 放进真实工作流和业务场景",

@@ -793,6 +793,47 @@ img {
   font-size: var(--text-xs);
 }
 
+/* ─── 关键词高亮 ──────────────────────────────────────── */
+.kw {
+  color: var(--brass);
+  font-weight: 700;
+}
+
+/* ─── 交付方式：格式名称与描述分行 ─────────────────────── */
+.delivery-format-name {
+  display: block;
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.delivery-format-desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+}
+
+/* ─── 讲师介绍附加样式 ───────────────────────────────── */
+.instructor-research {
+  margin: 0 0 var(--sp-3);
+  color: var(--muted);
+  font-size: var(--text-base);
+  line-height: 1.8;
+  padding-left: 14px;
+  border-left: 3px solid var(--brass);
+}
+
+.credentials-label {
+  margin: var(--sp-5) 0 0;
+  padding: 0;
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
 /* ─── 动画 ───────────────────────────────────────────── */
 [data-reveal] {
   transition:
