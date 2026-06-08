@@ -205,7 +205,7 @@ img {
 /* ─── 首屏 ──────────────────────────────────────────── */
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 1fr);
   min-height: calc(100svh - 72px);
   align-items: center;
   gap: clamp(40px, 6vw, 96px);
@@ -1073,8 +1073,8 @@ img {
     min-height: 260px;
   }
 
-  .sticker-slideshow {
-    height: clamp(260px, 42vw, 360px);
+  .sticker-track-wrap {
+    height: clamp(240px, 38vw, 320px);
   }
 
   .pain-list,
