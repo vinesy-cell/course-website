@@ -60,9 +60,12 @@ const recommendationHeading = findHeading(homepageDoc, "推荐主题", {
   within: courseParent,
 });
 const courseTitles = [
-  "企业AI应用实战课",
-  "产业园区AI场景实战课",
-  "从链主招商到任务招商",
+  "AI驱动企业经营效率跃升",
+  "AI重塑产业园区运营逻辑",
+  "AI赋能企业办公倍速提效",
+  "AI Agent智能体应用与搭建",
+  "新质生产力与AI赋能创新",
+  "AI赋能政企协同与产业服务",
 ];
 const courses = courseTitles.map((title) => {
   const heading = findHeading(homepageDoc, title, { within: courseParent });
@@ -125,7 +128,7 @@ const contactMap = Object.fromEntries(
 const assets = {
   wechatQr: "微信二维码_李凯_IMG_9523.JPG",
   accountQr: "公众号二维码_李凯思考笔记_IMG_9524.JPG",
-  coursePoster: "课程介绍海报_文字文稿4_01.jpg",
+  coursePoster: "李凯_个人主视觉.png",
 };
 
 const siteData = {
