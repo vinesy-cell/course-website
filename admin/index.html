@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>网站机器人后台</title>
+    <link rel="stylesheet" href="./admin.css" />
+    <script src="./admin.js" type="module"></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">LK</span>
+        <div>
+          <strong>网站机器人后台</strong>
+          <small>课程网站同步系统</small>
+        </div>
+      </div>
+      <nav>
+        <a href="#overview">总览</a>
+        <a href="#sync">内容同步</a>
+        <a href="#preview">本地预览</a>
+        <a href="#publish">发布上线</a>
+        <a href="#logs">操作日志</a>
+        <a href="#settings">设置</a>
+      </nav>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <h1>网站机器人后台</h1>
+          <p>从 Obsidian 内容源同步、构建、预览并发布课程网站</p>
+        </div>
+        <button id="refresh" type="button">刷新状态</button>
+      </header>
+
+      <section class="status-grid" id="overview">
+        <article class="status-card">
+          <span>内容源</span>
+          <strong id="content-root">读取中</strong>
+        </article>
+        <article class="status-card">
+          <span>网站仓库</span>
+          <strong id="repo-status">读取中</strong>
+        </article>
+        <article class="status-card">
+          <span>最近同步</span>
+          <strong id="sync-time">读取中</strong>
+        </article>
+        <article class="status-card">
+          <span>发布状态</span>
+          <strong id="publish-status">读取中</strong>
+        </article>
+      </section>
+
+      <section class="workflow" id="sync">
+        <button data-action="sync" type="button">
+          <span>01</span>
+          <strong>同步内容</strong>
+          <small>读取 Obsidian 文件夹并更新结构化数据</small>
+        </button>
+        <button data-action="build" type="button">
+          <span>02</span>
+          <strong>构建网站</strong>
+          <small>生成可发布的静态网页并做口径检查</small>
+        </button>
+        <a class="workflow-link" href="/preview/" target="_blank" rel="noreferrer">
+          <span>03</span>
+          <strong>打开预览</strong>
+          <small>查看当前本地网站效果</small>
+        </a>
+        <button data-action="publish" type="button" id="publish">
+          <span>04</span>
+          <strong>发布上线</strong>
+          <small>提交并推送到远程仓库触发部署</small>
+        </button>
+      </section>
+
+      <section class="dashboard">
+        <article class="panel decisions">
+          <h2>待确认事项</h2>
+          <label><input type="checkbox" /> 价格是否公开</label>
+          <label><input type="checkbox" /> 二维码是否可识别</label>
+          <label><input type="checkbox" checked /> 未授权案例未公开</label>
+          <label><input type="checkbox" /> 移动端首屏通过</label>
+        </article>
+
+        <article class="panel timeline">
+          <h2>同步状态</h2>
+          <ol>
+            <li><span></span> 读取内容源</li>
+            <li><span></span> 生成站点数据</li>
+            <li><span></span> 构建静态网页</li>
+            <li><span></span> 推送发布</li>
+          </ol>
+        </article>
+
+        <article class="panel preview" id="preview">
+          <h2>网站预览</h2>
+          <iframe src="/preview/" title="课程网站本地预览"></iframe>
+        </article>
+      </section>
+
+      <section class="panel logs" id="logs">
+        <div class="panel-title">
+          <h2>机器人日志</h2>
+          <span id="busy-note">空闲</span>
+        </div>
+        <pre id="log-output">等待日志...</pre>
+      </section>
+
+      <section class="panel settings" id="settings">
+        <h2>设置</h2>
+        <dl>
+          <div><dt>内容源</dt><dd id="setting-source"></dd></div>
+          <div><dt>预览地址</dt><dd><a id="setting-preview" href="/preview/" target="_blank" rel="noreferrer">打开预览</a></dd></div>
+          <div><dt>远程仓库</dt><dd id="setting-remote"></dd></div>
+        </dl>
+      </section>
+    </main>
+  </body>
+</html>

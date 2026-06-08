@@ -1,0 +1,44 @@
+# 课程网站发布系统进度
+
+- 任务目标：基于 `/Users/maxlee/Documents/LK ThinkNote/07_课程网站` 搭建可发布的网站、内容同步机器人、本地后台和自动部署流程。
+- 开始时间：2026-06-08 14:21:56 CST
+- 处理范围：
+  - 内容源：`/Users/maxlee/Documents/LK ThinkNote/07_课程网站`
+  - 网站仓库：`/Users/maxlee/Documents/网站`
+  - 输出：静态网站、同步脚本、本地机器人后台、发布脚本、部署说明
+- 当前环境：
+  - Node.js：可用
+  - Git：可用
+  - 网站仓库：已初始化 Git 并纳入版本管理
+  - 远程仓库：未配置
+  - GitHub/Vercel/Netlify CLI 或 Token：当前未检测到
+  - macOS 常驻机器人：已安装并运行
+- 已完成批次：
+  - [x] 检查网站仓库、Node、Git 和部署凭据状态。
+  - [x] 建立项目目录骨架。
+  - [x] 实现内容同步脚本。
+  - [x] 实现静态网站构建与前端页面。
+  - [x] 实现本地机器人后台。
+  - [x] 实现内容变化实时监听器。
+  - [x] 实现 macOS 常驻后台服务安装与卸载脚本。
+  - [x] 实现发布脚本和 GitHub Pages workflow。
+  - [x] 本地构建、预览和浏览器验收。
+  - [x] 记录后台操作说明与发布接入方式。
+- 验证结果：
+  - `npm run content:sync`：通过
+  - `npm run build`：通过
+  - `npm run check`：通过
+  - 后台与本地预览：桌面端、移动端、导航、二维码、中文图片路径均已验收
+  - LaunchAgent：`com.maxlee.course-site-robot` 状态为 `running`，端口 `4174` 正在监听
+  - 后台网络边界：仅监听本机 `127.0.0.1`
+- 失败项：无
+- 已解决问题：
+  - 初次安装 LaunchAgent 后，其默认 `PATH` 无法找到 `npm`；安装脚本已补充运行环境并重新验证自动同步。
+- 跳过项：
+  - 公网发布尚未执行：当前没有配置远程仓库，GitHub 浏览器页面也处于未登录状态。
+- 后台地址：`http://localhost:4174`
+- 本地预览：`http://localhost:4174/preview/`
+- 恢复入口：
+  - 后台操作：`/Users/maxlee/Documents/网站/docs/后台操作说明.md`
+  - Obsidian 说明：`/Users/maxlee/Documents/LK ThinkNote/07_课程网站/03_生成与发布/04_网站机器人后台操作说明.md`
+- 下一步断点：配置 GitHub 远程仓库并设置 Pages Source 为 `GitHub Actions`，然后在后台点击“发布上线”或运行 `npm run publish`。

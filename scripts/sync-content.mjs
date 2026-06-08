@@ -1,0 +1,214 @@
+import fs from "node:fs";
+import path from "node:path";
+import {
+  bullets,
+  childHeadings,
+  cleanInline,
+  findHeading,
+  firstParagraph,
+  labeledList,
+  paragraphs,
+  readDocument,
+  sectionLines,
+  table,
+} from "./lib/markdown.mjs";
+import {
+  ensureDirectory,
+  nowIso,
+  projectRoot,
+  readConfig,
+  writeJson,
+} from "./lib/config.mjs";
+
+const config = readConfig();
+const source = (...segments) => path.join(config.contentRoot, ...segments);
+const requiredFiles = {
+  decisions: source("00_项目管理", "01_当前状态与决策清单.md"),
+  homepage: source("02_网站结构与文案", "02_首页内容骨架.md"),
+  contacts: source("01_网站资料清单", "02_公开联系方式与二维码.md"),
+};
+
+for (const [name, filePath] of Object.entries(requiredFiles)) {
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`缺少内容源文件（${name}）：${filePath}`);
+  }
+}
+
+const decisionsDoc = readDocument(requiredFiles.decisions);
+const homepageDoc = readDocument(requiredFiles.homepage);
+const contactsDoc = readDocument(requiredFiles.contacts);
+
+const decisionHeading = findHeading(decisionsDoc, "已确定口径");
+const pendingHeading = findHeading(decisionsDoc, "待确认决策与默认处理");
+const decisions = Object.fromEntries(
+  table(sectionLines(decisionsDoc, decisionHeading)).map((row) => [
+    row["项目"],
+    row["当前采用"],
+  ]),
+);
+const pending = table(sectionLines(decisionsDoc, pendingHeading));
+
+const heroParent = findHeading(homepageDoc, "首屏");
+const heroValue = (title) => {
+  const heading = findHeading(homepageDoc, title, { within: heroParent });
+  return firstParagraph(homepageDoc, heading);
+};
+
+const painHeading = findHeading(homepageDoc, "痛点区");
+const courseParent = findHeading(homepageDoc, "课程矩阵");
+const recommendationHeading = findHeading(homepageDoc, "推荐主题", {
+  within: courseParent,
+});
+const courseTitles = [
+  "企业AI应用实战课",
+  "产业园区AI场景实战课",
+  "从链主招商到任务招商",
+];
+const courses = courseTitles.map((title) => {
+  const heading = findHeading(homepageDoc, title, { within: courseParent });
+  const lines = sectionLines(homepageDoc, heading);
+  return {
+    title,
+    description: paragraphs(lines)[0] || "",
+    audience: labeledList(lines, "适合"),
+    outcomes: labeledList(lines, "带走"),
+  };
+});
+
+const deliveryHeading = findHeading(homepageDoc, "交付方式");
+const deliveryContentHeading = findHeading(homepageDoc, "可开展内容", {
+  within: deliveryHeading,
+});
+
+const cooperationParent = findHeading(homepageDoc, "三档合作方案");
+const cooperationTitles = [
+  "AI产业场景诊断服务",
+  "AI产业场景闭门研讨 / 专题内训",
+  "AI场景落地行动工作坊",
+];
+const cooperation = cooperationTitles.map((title) => {
+  const heading = findHeading(homepageDoc, title, { within: cooperationParent });
+  const lines = sectionLines(homepageDoc, heading);
+  const text = paragraphs(lines);
+  return {
+    title,
+    level: cleanInline(text[0] || "").replace(/[，,].*$/, ""),
+    description:
+      text.find(
+        (paragraph) =>
+          paragraph.startsWith("适合") && !paragraph.includes("¥"),
+      ) || "",
+    includes: labeledList(lines, "包含"),
+  };
+});
+
+const upgradeHeading = findHeading(homepageDoc, "可选升级", {
+  within: cooperationParent,
+});
+const instructorHeading = findHeading(homepageDoc, "讲师介绍");
+const researchHeading = findHeading(homepageDoc, "研究方向", {
+  within: instructorHeading,
+});
+const credentialsHeading = findHeading(homepageDoc, "部分认证与专业背书", {
+  within: instructorHeading,
+});
+const trustHeading = findHeading(homepageDoc, "信任资产");
+const valuesHeading = findHeading(homepageDoc, "价值表达");
+const conversionHeading = findHeading(homepageDoc, "转化入口");
+
+const contactHeading = findHeading(contactsDoc, "对外联系方式");
+const contactRows = table(sectionLines(contactsDoc, contactHeading));
+const contactMap = Object.fromEntries(
+  contactRows.map((row) => [row["类型"], row["内容"]]),
+);
+
+const assets = {
+  wechatQr: "微信二维码_李凯_IMG_9523.JPG",
+  accountQr: "公众号二维码_李凯思考笔记_IMG_9524.JPG",
+  coursePoster: "课程介绍海报_文字文稿4_01.jpg",
+};
+
+const siteData = {
+  meta: {
+    siteName: config.siteName,
+    title: decisions["网站主标题"] || config.siteTitle,
+    description: heroValue("副标题"),
+    syncedAt: nowIso(),
+    sourceRoot: config.contentRoot,
+    publicPrices: Boolean(config.publicPrices),
+  },
+  navigation: ["课程方案", "场景工作坊", "合作方式", "讲师介绍", "联系"],
+  hero: {
+    title: heroValue("H1") || decisions["网站主标题"] || config.siteTitle,
+    tagline: heroValue("顶部标语"),
+    sceneLabel: heroValue("场景标签"),
+    subtitle: heroValue("副标题"),
+    instructor: heroValue("讲师简介短句"),
+    actions: bullets(
+      sectionLines(
+        homepageDoc,
+        findHeading(homepageDoc, "首屏按钮", { within: heroParent }),
+      ),
+    ),
+  },
+  pain: {
+    intro: paragraphs(sectionLines(homepageDoc, painHeading))[0] || "",
+    items: bullets(sectionLines(homepageDoc, painHeading)),
+  },
+  recommendations: table(sectionLines(homepageDoc, recommendationHeading)),
+  courses,
+  delivery: {
+    formats: bullets(sectionLines(homepageDoc, deliveryHeading)),
+    content: table(sectionLines(homepageDoc, deliveryContentHeading)),
+  },
+  cooperation: {
+    intro: paragraphs(sectionLines(homepageDoc, cooperationParent))[0] || "",
+    plans: cooperation,
+    upgrades: bullets(sectionLines(homepageDoc, upgradeHeading)).map((item) =>
+      item.replace(/：¥[\d,]+ 起，?/, "："),
+    ),
+  },
+  instructor: {
+    paragraphs: paragraphs(sectionLines(homepageDoc, instructorHeading)).slice(0, 2),
+    research: firstParagraph(homepageDoc, researchHeading),
+    credentials: bullets(sectionLines(homepageDoc, credentialsHeading)),
+  },
+  trust: bullets(sectionLines(homepageDoc, trustHeading)).filter(
+    (item) => !item.includes("07_课程网站/"),
+  ),
+  values: bullets(sectionLines(homepageDoc, valuesHeading)),
+  conversion: {
+    paragraphs: paragraphs(sectionLines(homepageDoc, conversionHeading)).slice(0, 2),
+    options: bullets(sectionLines(homepageDoc, conversionHeading)),
+  },
+  contacts: {
+    phone: contactMap["电话"] || "",
+    email: contactMap["邮箱"] || "",
+    wechat: contactMap["微信"] || "",
+    account: contactMap["公众号"] || "",
+  },
+  decisions,
+  pending,
+  assets,
+};
+
+writeJson(path.join(projectRoot, "content", "site-data.json"), siteData);
+
+const publicAssets = path.join(projectRoot, "public", "assets");
+ensureDirectory(publicAssets);
+for (const fileName of Object.values(assets)) {
+  const from = source("05_视觉素材", fileName);
+  if (fs.existsSync(from)) {
+    fs.copyFileSync(from, path.join(publicAssets, fileName));
+  }
+}
+
+writeJson(path.join(projectRoot, ".last-sync.json"), {
+  syncedAt: siteData.meta.syncedAt,
+  sourceRoot: config.contentRoot,
+  files: Object.values(requiredFiles),
+  assetsCopied: Object.values(assets),
+});
+
+console.log(`内容同步完成：${siteData.meta.syncedAt}`);
+console.log(`内容源：${config.contentRoot}`);
