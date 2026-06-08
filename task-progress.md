@@ -10,9 +10,10 @@
   - Node.js：可用
   - Git：可用
   - 网站仓库：已初始化 Git 并纳入版本管理
-  - 远程仓库：未配置
-  - GitHub/Vercel/Netlify CLI 或 Token：当前未检测到
+  - 远程仓库：`git@github.com:vinesy-cell/course-website.git`（已推送）
+  - GitHub 账号：`vinesy-cell`
   - macOS 常驻机器人：已安装并运行
+  - **公网网站：已上线 ✅ https://vinesy-cell.github.io/course-website/**
 - 已完成批次：
   - [x] 检查网站仓库、Node、Git 和部署凭据状态。
   - [x] 建立项目目录骨架。
@@ -34,11 +35,24 @@
 - 失败项：无
 - 已解决问题：
   - 初次安装 LaunchAgent 后，其默认 `PATH` 无法找到 `npm`；安装脚本已补充运行环境并重新验证自动同步。
-- 跳过项：
-  - 公网发布尚未执行：当前没有配置远程仓库，GitHub 浏览器页面也处于未登录状态。
+  - [x] 生成 SSH 密钥并创建 GitHub 部署脚本与公网发布说明。
+- 已完成的公网发布准备：
+  - SSH 密钥已生成：`~/.ssh/id_ed25519_course`（ed25519，2026-06-08）
+  - SSH config 已写入 `~/.ssh/config`，指向 GitHub
+  - 一键配置脚本：`scripts/setup-github.mjs`，命令：`npm run setup:github <用户名> <仓库名>`
+  - 完整发布指南：`docs/发布到公网.md`
+- 公网发布：已全部完成 ✅（2026-06-08）
+  - SSH 公钥已添加到 GitHub 账号 `vinesy-cell`
+  - 仓库已创建并推送：`github.com/vinesy-cell/course-website`
+  - GitHub Pages Source 已设为 GitHub Actions
+  - 首次 Actions 构建成功（build 12s + deploy 9s）
+  - 网站已可公开访问
+- 公钥内容：`ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL0tOeNjXjH5jM7HaIgq5Y1bd/vmDZ0EWJ3ojMjLAsOn maxlee-course-site`
+- 公网网站：**https://vinesy-cell.github.io/course-website/**
 - 后台地址：`http://localhost:4174`
 - 本地预览：`http://localhost:4174/preview/`
 - 恢复入口：
   - 后台操作：`/Users/maxlee/Documents/网站/docs/后台操作说明.md`
+  - 公网发布指南：`/Users/maxlee/Documents/网站/docs/发布到公网.md`
   - Obsidian 说明：`/Users/maxlee/Documents/LK ThinkNote/07_课程网站/03_生成与发布/04_网站机器人后台操作说明.md`
-- 下一步断点：配置 GitHub 远程仓库并设置 Pages Source 为 `GitHub Actions`，然后在后台点击“发布上线”或运行 `npm run publish`。
+- 日常发布流程：在 Obsidian 更新内容 → 打开后台 http://localhost:4174 → 点击”发布上线”即可。

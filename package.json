@@ -13,6 +13,7 @@
     "robot:install": "node scripts/install-launch-agent.mjs",
     "robot:uninstall": "node scripts/uninstall-launch-agent.mjs",
     "watch": "node scripts/watch.mjs",
-    "publish": "node scripts/publish.mjs"
+    "publish": "node scripts/publish.mjs",
+    "setup:github": "node scripts/setup-github.mjs"
   }
 }
