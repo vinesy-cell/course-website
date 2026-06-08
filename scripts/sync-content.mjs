@@ -62,6 +62,16 @@ const courseParent = findHeading(homepageDoc, "课程矩阵");
 const recommendationHeading = findHeading(homepageDoc, "推荐主题", {
   within: courseParent,
 });
+// 课程分类颜色映射
+const COURSE_CATEGORY_COLORS = {
+  "企业经营": "brass",
+  "产业园区": "blue",
+  "办公效能": "muted",
+  "技术进阶": "brass",
+  "认知与趋势": "muted",
+  "政企协同": "blue",
+};
+
 const courseTitles = [
   "AI驱动企业经营效率跃升",
   "AI重塑产业园区运营逻辑",
@@ -73,9 +83,14 @@ const courseTitles = [
 const courses = courseTitles.map((title) => {
   const heading = findHeading(homepageDoc, title, { within: courseParent });
   const lines = sectionLines(homepageDoc, heading);
+  const allParas = paragraphs(lines);
+  const categoryPara = allParas.find((p) => /^分类[：:]/.test(p)) || "";
+  const category = cleanInline(categoryPara.replace(/^分类[：:]\s*/, ""));
   return {
     title,
-    description: paragraphs(lines)[0] || "",
+    description: allParas.find((p) => !/^分类[：:]/.test(p)) || "",
+    category,
+    categoryColor: COURSE_CATEGORY_COLORS[category] || "muted",
     audience: labeledList(lines, "适合"),
     outcomes: labeledList(lines, "带走"),
   };

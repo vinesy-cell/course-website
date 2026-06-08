@@ -3,7 +3,7 @@
     "siteName": "李凯思考笔记",
     "title": "AI进入企业和园区业务现场的实战课程与工作坊",
     "description": "不是再学一个 AI 工具，而是把 AI 放进企业经营、团队协同、园区招商和产业服务的真实任务里，形成可落地、可复用、能持续创造成果的组织能力。",
-    "syncedAt": "2026-06-08T14:23:20.898Z",
+    "syncedAt": "2026-06-08T14:25:48.035Z",
     "sourceRoot": "/Users/maxlee/Documents/LK ThinkNote/07_课程网站",
     "publicPrices": true
   },
@@ -59,6 +59,8 @@
     {
       "title": "AI驱动企业经营效率跃升",
       "description": "面向企业负责人、管理层和业务团队，围绕经营分析、组织协同、客户研究和流程再造，训练学员把 AI 用进高频工作任务，重塑组织协同效率。",
+      "category": "企业经营",
+      "categoryColor": "brass",
       "audience": [
         "企业负责人与管理层",
         "职能部门负责人",
@@ -75,6 +77,8 @@
     {
       "title": "AI重塑产业园区运营逻辑",
       "description": "面向园区运营方、政府平台和招商团队，把 AI 应用到招商文案、企业画像、产业研究、政策解读和园区运营中，激发园区发展新动能。",
+      "category": "产业园区",
+      "categoryColor": "blue",
       "audience": [
         "园区平台公司管理层",
         "招商与运营团队",
@@ -91,6 +95,8 @@
     {
       "title": "AI赋能企业办公倍速提效",
       "description": "面向各类组织的管理团队和职能人员，围绕 Word、Excel、PPT、公文写作、会议纪要和材料表达，掌握 AI 对话密钥，提升智能交互效率。",
+      "category": "办公效能",
+      "categoryColor": "muted",
       "audience": [
         "政府机关与事业单位人员",
         "企业中层管理人员",
@@ -107,6 +113,8 @@
     {
       "title": "AI Agent智能体应用与搭建",
       "description": "面向有一定 AI 基础、希望构建更智能化工作方式的团队，打造智能伙伴，构建企业数字员工体系，实现业务流程自动化。",
+      "category": "技术进阶",
+      "categoryColor": "brass",
       "audience": [
         "有 AI 应用基础的企业团队",
         "数字化转型推进负责人",
@@ -123,6 +131,8 @@
     {
       "title": "新质生产力与AI赋能创新",
       "description": "面向政府干部、园区管理层和企业高管，从宏观视角理解新质生产力政策导向，把 AI 创新潜能转化为组织与产业层面的具体行动。",
+      "category": "认知与趋势",
+      "categoryColor": "muted",
       "audience": [
         "政府机关干部与公务员",
         "开发区与产业园区管理层",
@@ -139,6 +149,8 @@
     {
       "title": "AI赋能政企协同与产业服务",
       "description": "聚焦政企协同场景，帮助政府平台、园区和企业通过 AI 构建更高效的产业服务体系，贯通政企园企三方协同逻辑，构建产业生态。",
+      "category": "政企协同",
+      "categoryColor": "blue",
       "audience": [
         "地方政府与开发区平台",
         "产业服务机构",

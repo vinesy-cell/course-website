@@ -137,6 +137,7 @@ function renderCourses(data) {
         <article class="course-block" data-reveal>
           <div>
             <span class="course-index">${String(index + 1).padStart(2, "0")}</span>
+            ${course.category ? `<span class="insight-tag insight-tag--${escapeHtml(course.categoryColor)}">${escapeHtml(course.category)}</span>` : ""}
             <h3>《${escapeHtml(course.title)}》</h3>
             <p>${escapeHtml(course.description)}</p>
           </div>
