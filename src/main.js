@@ -53,6 +53,7 @@ function renderNavigation(data) {
 
 function renderHero(data) {
   const hero = document.querySelector(".hero-copy");
+  const visual = document.querySelector(".hero-visual");
   const actions = data.hero.actions.length
     ? data.hero.actions
     : ["发来3个真实问题", "了解课程方案"];
@@ -65,6 +66,24 @@ function renderHero(data) {
       <a class="button secondary" href="#courses">${escapeHtml(actions[0])}</a>
     </div>
   `;
+
+  // 若有本周贴图，用滚动图片带替换 hero 静态图
+  if (data.stickers && data.stickers.length > 0) {
+    visual.classList.add("sticker-mode");
+    const items = data.stickers
+      .map(
+        (f) =>
+          `<img src="./assets/stickers/${encodeURIComponent(f)}" alt="公众号配图" loading="lazy" />`,
+      )
+      .join("");
+    visual.innerHTML = `
+      <div class="sticker-track-wrap">
+        <div class="sticker-track">
+          ${items}${items}
+        </div>
+      </div>
+    `;
+  }
 }
 
 function renderPain(data) {

@@ -158,6 +158,15 @@ const assets = {
   coursePoster: "李凯_个人主视觉.png",
 };
 
+// 公众号贴图：扫描 05_视觉素材/公众号贴图/ 文件夹，取全部图片（按文件名排序）
+const STICKER_EXTS = new Set([".jpg", ".jpeg", ".png", ".gif", ".webp"]);
+const stickersDir = source("05_视觉素材", "公众号贴图");
+const stickerFiles = fs.existsSync(stickersDir)
+  ? fs.readdirSync(stickersDir)
+      .filter((f) => STICKER_EXTS.has(path.extname(f).toLowerCase()))
+      .sort()
+  : [];
+
 const siteData = {
   meta: {
     siteName: config.siteName,
@@ -218,6 +227,7 @@ const siteData = {
     account: contactMap["公众号"] || "",
   },
   insights,
+  stickers: stickerFiles,
   decisions,
   pending,
   assets,
@@ -232,6 +242,16 @@ for (const fileName of Object.values(assets)) {
   if (fs.existsSync(from)) {
     fs.copyFileSync(from, path.join(publicAssets, fileName));
   }
+}
+
+// 复制本周贴图到 public/assets/stickers/
+if (stickerFiles.length > 0) {
+  const stickersOut = path.join(projectRoot, "public", "assets", "stickers");
+  ensureDirectory(stickersOut);
+  for (const f of stickerFiles) {
+    fs.copyFileSync(path.join(stickersDir, f), path.join(stickersOut, f));
+  }
+  console.log(`贴图已复制：${stickerFiles.length} 张`);
 }
 
 writeJson(path.join(projectRoot, ".last-sync.json"), {

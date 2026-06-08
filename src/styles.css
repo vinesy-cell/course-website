@@ -285,6 +285,46 @@ img {
   border-right: 0;
 }
 
+/* ─── Hero 贴图滚动带 ──────────────────────────────────── */
+.sticker-track-wrap {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  /* 两侧渐隐，让滚动更自然 */
+  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+
+.sticker-track {
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  animation: sticker-scroll 24s linear infinite;
+}
+
+.sticker-track:hover {
+  animation-play-state: paused;
+}
+
+.sticker-track img {
+  height: 300px;
+  width: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+
+@keyframes sticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* 轮播模式下隐藏金色装饰边框 */
+.hero-visual.sticker-mode::before {
+  display: none;
+}
+
 /* ─── 痛点区 ─────────────────────────────────────────── */
 .pain {
   border-top: 1px solid var(--line);
@@ -957,6 +997,10 @@ img {
 
   .hero-visual img {
     min-height: 260px;
+  }
+
+  .sticker-track img {
+    height: 180px;
   }
 
   .pain-list,
