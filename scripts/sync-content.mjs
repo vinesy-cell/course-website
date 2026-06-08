@@ -96,9 +96,14 @@ const cooperation = cooperationTitles.map((title) => {
   const heading = findHeading(homepageDoc, title, { within: cooperationParent });
   const lines = sectionLines(homepageDoc, heading);
   const text = paragraphs(lines);
+  const firstLine = cleanInline(text[0] || "");
+  const commaIndex = firstLine.search(/[，,]/);
+  const level = commaIndex >= 0 ? firstLine.slice(0, commaIndex) : firstLine;
+  const price = commaIndex >= 0 ? firstLine.slice(commaIndex + 1).replace(/[。.]\s*$/, "").trim() : "";
   return {
     title,
-    level: cleanInline(text[0] || "").replace(/[，,].*$/, ""),
+    level,
+    price,
     description:
       text.find(
         (paragraph) =>

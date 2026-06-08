@@ -167,6 +167,7 @@ function renderCooperation(data) {
             <article class="plan">
               <p class="plan-level">${escapeHtml(plan.level || "按场景定制")}</p>
               <h3>${escapeHtml(plan.title)}</h3>
+              ${data.meta.publicPrices && plan.price ? `<p class="plan-price">${escapeHtml(plan.price)}</p>` : ""}
               <p class="plan-description">${escapeHtml(plan.description)}</p>
               ${list(plan.includes)}
               <a class="button" href="#contact">带着真实问题沟通</a>
