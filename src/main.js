@@ -58,7 +58,7 @@ function renderHero(data) {
     ? data.hero.actions
     : ["发来3个真实问题", "了解课程方案"];
   hero.innerHTML = `
-    <h1>${escapeHtml(data.hero.title)}</h1>
+    <h1>${data.hero.title.split("\n").map(escapeHtml).join("<br>")}</h1>
     <p class="hero-subtitle">${escapeHtml(data.hero.subtitle)}</p>
     <p class="hero-instructor">${escapeHtml(data.hero.instructor)}</p>
     <div class="hero-actions">
@@ -123,9 +123,9 @@ function renderCourseCatalog(data) {
         .map(
           (cat) => `
             <div class="catalog-card catalog-card--${escapeHtml(cat.color)}">
-              <p class="catalog-category">${escapeHtml(cat.name)}</p>
+              <p class="catalog-category">${escapeHtml(cat.name)}篇</p>
               <ul class="catalog-list">
-                ${cat.courses.map((c) => `<li>${escapeHtml(c)}</li>`).join("")}
+                ${cat.courses.map((c) => `<li>《${escapeHtml(c)}》</li>`).join("")}
               </ul>
             </div>
           `,

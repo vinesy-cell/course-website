@@ -57,6 +57,11 @@ const heroValue = (title) => {
   const heading = findHeading(homepageDoc, title, { within: heroParent });
   return firstParagraph(homepageDoc, heading);
 };
+// H1 特殊处理：保留原始换行，让渲染层可以将每行显示为独立一行
+const h1Heading = findHeading(homepageDoc, "H1", { within: heroParent });
+const h1Title = sectionLines(homepageDoc, h1Heading)
+  .filter((l) => l.trim() && !/^#{1,6}\s/.test(l.trim()))
+  .join("\n") || heroValue("H1");
 
 const painHeading = findHeading(homepageDoc, "痛点区");
 const courseParent = findHeading(homepageDoc, "课程矩阵");
@@ -214,7 +219,7 @@ const siteData = {
   },
   navigation: ["课程方案", "场景工作坊", "合作方式", "讲师介绍", "思想与洞察", "联系"],
   hero: {
-    title: heroValue("H1") || decisions["网站主标题"] || config.siteTitle,
+    title: h1Title,
     tagline: heroValue("顶部标语"),
     sceneLabel: heroValue("场景标签"),
     subtitle: heroValue("副标题"),

@@ -420,21 +420,24 @@ img {
   border-top: 3px solid rgba(255, 255, 255, 0.2);
 }
 
-.catalog-card--blue  { border-top-color: var(--blue-mid, #5b9bd5); }
+.catalog-card--blue  { border-top-color: #6aafd6; }
 .catalog-card--brass { border-top-color: var(--brass); }
 .catalog-card--muted { border-top-color: rgba(255, 255, 255, 0.35); }
 
 .catalog-category {
-  margin: 0 0 12px;
-  font-size: 13px;
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 12px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-.catalog-card--blue  .catalog-category { color: var(--blue-mid, #88b8e8); }
-.catalog-card--brass .catalog-category { color: var(--brass); }
+.catalog-card--blue  .catalog-category { background: #4a85aa; color: #fff; }
+.catalog-card--brass .catalog-category { background: var(--brass); color: #fff; }
 
 .catalog-list {
   margin: 0;
