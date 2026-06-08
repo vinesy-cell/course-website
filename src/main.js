@@ -203,7 +203,7 @@ function renderContact(data) {
     <div class="contact-layout">
       <div>
         ${sectionHeader("06 / 联系", "先把一个真实问题说清楚")}
-        ${data.conversion.paragraphs.map((item) => `<p>${escapeHtml(item)}</p>`).join("")}
+        <p>${escapeHtml(data.conversion.paragraphs[0] || "")}</p>
         <div class="contact-links">
           <a href="tel:${escapeHtml(data.contacts.phone)}"><span>电话</span><strong>${escapeHtml(data.contacts.phone)}</strong></a>
           <a href="mailto:${escapeHtml(data.contacts.email)}"><span>邮箱</span><strong>${escapeHtml(data.contacts.email)}</strong></a>
