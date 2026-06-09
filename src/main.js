@@ -28,7 +28,7 @@ const CREDENTIAL_LOGOS = [
 const credentialIcon = (text) => {
   const match = CREDENTIAL_LOGOS.find(({ keyword }) => text.includes(keyword));
   if (match) {
-    return `<img class="credential-logo" src="https://www.google.com/s2/favicons?domain=${match.domain}&sz=32" alt="${match.keyword}" loading="lazy">`;
+    return `<img class="credential-logo" src="./assets/logos/${match.domain}.png" alt="${match.keyword}" loading="lazy">`;
   }
   return `<span class="credential-star" aria-hidden="true">★</span>`;
 };

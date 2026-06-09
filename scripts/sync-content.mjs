@@ -303,5 +303,34 @@ writeJson(path.join(projectRoot, ".last-sync.json"), {
   assetsCopied: Object.values(assets),
 });
 
+// ── 下载背书机构 logo（缓存到本地，避免依赖外部服务）──────────
+const CREDENTIAL_LOGO_DOMAINS = [
+  { keyword: "浙大城市学院", domain: "zucc.edu.cn" },
+  { keyword: "浙江大学",     domain: "zju.edu.cn" },
+  { keyword: "科大讯飞",     domain: "iflytek.com" },
+  { keyword: "阿里巴巴",     domain: "alibaba.com" },
+  { keyword: "蚂蚁集团",     domain: "antgroup.com" },
+  { keyword: "商汤集团",     domain: "sensetime.com" },
+];
+const logosDir = path.join(projectRoot, "public", "assets", "logos");
+ensureDirectory(logosDir);
+for (const { domain } of CREDENTIAL_LOGO_DOMAINS) {
+  const localFile = path.join(logosDir, `${domain}.png`);
+  if (!fs.existsSync(localFile)) {
+    try {
+      const res = await fetch(
+        `https://www.google.com/s2/favicons?domain=${domain}&sz=64`,
+        { signal: AbortSignal.timeout(8000) },
+      );
+      if (res.ok) {
+        fs.writeFileSync(localFile, Buffer.from(await res.arrayBuffer()));
+        console.log(`Logo 已下载：${domain}`);
+      }
+    } catch {
+      // 网络不可用时跳过，不影响其他内容
+    }
+  }
+}
+
 console.log(`内容同步完成：${siteData.meta.syncedAt}`);
 console.log(`内容源：${config.contentRoot}`);

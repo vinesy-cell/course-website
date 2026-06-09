@@ -688,7 +688,7 @@ img {
 /* ─── 讲师介绍 ──────────────────────────────────────── */
 .instructor {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: 1.4fr 1fr;
   gap: clamp(40px, 6vw, 96px);
   align-items: start;
 }
@@ -762,6 +762,9 @@ img {
   display: block;
   width: 100%;
   height: auto;
+  max-height: 560px;
+  object-fit: cover;
+  object-position: top;
 }
 
 /* ─── 思想与洞察 ─────────────────────────────────────── */
