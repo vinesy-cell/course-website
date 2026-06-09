@@ -751,10 +751,9 @@ img {
 }
 
 .poster-frame {
-  padding: 16px;
   border: 1px solid var(--line);
-  background: var(--paper-strong);
   box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
 .poster-frame img {
