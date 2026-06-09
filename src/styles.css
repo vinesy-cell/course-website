@@ -751,15 +751,17 @@ img {
 }
 
 .poster-frame {
+  margin: 0;
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
   overflow: hidden;
+  align-self: start;
 }
 
 .poster-frame img {
-  max-height: 720px;
-  margin: auto;
-  object-fit: contain;
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* ─── 思想与洞察 ─────────────────────────────────────── */
