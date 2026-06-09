@@ -313,7 +313,6 @@ img {
   height: 100%;
   width: auto;
   display: block;
-  object-fit: cover;
   flex-shrink: 0;
 }
 
