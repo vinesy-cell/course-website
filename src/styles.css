@@ -287,11 +287,16 @@ img {
 }
 
 /* ─── Hero 贴图横向滚动带 ──────────────────────────────── */
+/* 用 CSS 变量统一容器与图片高度，避免 % 高度在 flex 中解析失败 */
+:root {
+  --sticker-h: clamp(380px, 48vh, 480px);
+}
+
 .sticker-track-wrap {
   overflow: hidden;
   border-radius: 12px;
   box-shadow: var(--shadow);
-  height: clamp(360px, 44vh, 460px);
+  height: var(--sticker-h);
   /* 两侧柔光渐隐 */
   mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
@@ -299,8 +304,8 @@ img {
 
 .sticker-track {
   display: flex;
+  align-items: flex-start;
   gap: 6px;
-  height: 100%;
   width: max-content;
   animation: sticker-scroll 52s linear infinite;
 }
@@ -310,7 +315,8 @@ img {
 }
 
 .sticker-track img {
-  height: 100%;
+  /* 直接使用与容器相同的高度变量，不依赖 % 解析 */
+  height: var(--sticker-h);
   width: auto;
   display: block;
   flex-shrink: 0;
@@ -1072,8 +1078,8 @@ img {
     min-height: 260px;
   }
 
-  .sticker-track-wrap {
-    height: clamp(240px, 38vw, 320px);
+  :root {
+    --sticker-h: clamp(240px, 38vw, 320px);
   }
 
   .pain-list,
