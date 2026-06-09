@@ -711,11 +711,35 @@ img {
 }
 
 .credential-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 14px 14px 14px 0;
   border-bottom: 1px solid var(--line);
   color: var(--blue-dark);
   font-size: var(--text-sm);
   line-height: 1.55;
+}
+
+.credential-logo {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  object-fit: contain;
+  background: var(--paper);
+}
+
+.credential-star {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--brass);
+  font-size: 14px;
+  line-height: 1;
 }
 
 .credential-list li:nth-child(odd) {

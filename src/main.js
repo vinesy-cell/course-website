@@ -15,6 +15,24 @@ const highlight = (text) =>
     .replace(/MBA/g, '<span class="kw">MBA</span>')
     .replace(/19年/g, '<span class="kw">19年</span>');
 
+// 背书标志映射（关键词从长到短排列，避免短的先匹配）
+const CREDENTIAL_LOGOS = [
+  { keyword: "浙大城市学院", domain: "zucc.edu.cn" },
+  { keyword: "浙江大学",     domain: "zju.edu.cn" },
+  { keyword: "科大讯飞",     domain: "iflytek.com" },
+  { keyword: "阿里巴巴",     domain: "alibaba.com" },
+  { keyword: "蚂蚁集团",     domain: "antgroup.com" },
+  { keyword: "商汤集团",     domain: "sensetime.com" },
+];
+
+const credentialIcon = (text) => {
+  const match = CREDENTIAL_LOGOS.find(({ keyword }) => text.includes(keyword));
+  if (match) {
+    return `<img class="credential-logo" src="https://www.google.com/s2/favicons?domain=${match.domain}&sz=32" alt="${match.keyword}" loading="lazy">`;
+  }
+  return `<span class="credential-star" aria-hidden="true">★</span>`;
+};
+
 const list = (items = []) =>
   `<ul class="clean-list">${items
     .map((item) => `<li>${escapeHtml(item)}</li>`)
@@ -227,7 +245,7 @@ function renderInstructor(data) {
       <p class="credentials-label">部分认证与专业背书</p>
       <ul class="credential-list">
         ${data.instructor.credentials
-          .map((item) => `<li>${escapeHtml(item)}</li>`)
+          .map((item) => `<li>${credentialIcon(item)}<span>${escapeHtml(item)}</span></li>`)
           .join("")}
       </ul>
     </div>
