@@ -17,18 +17,18 @@ const highlight = (text) =>
 
 // 背书标志映射（关键词从长到短排列，避免短的先匹配）
 const CREDENTIAL_LOGOS = [
-  { keyword: "浙大城市学院", domain: "zucc.edu.cn" },
-  { keyword: "浙江大学",     domain: "zju.edu.cn" },
-  { keyword: "科大讯飞",     domain: "iflytek.com" },
-  { keyword: "阿里巴巴",     domain: "alibaba.com" },
-  { keyword: "蚂蚁集团",     domain: "antgroup.com" },
-  { keyword: "商汤集团",     domain: "sensetime.com" },
+  { keyword: "浙大城市学院", domain: "zucc.edu.cn",   ext: "svg" },
+  { keyword: "浙江大学",     domain: "zju.edu.cn",    ext: "svg" },
+  { keyword: "科大讯飞",     domain: "iflytek.com",   ext: "png" },
+  { keyword: "阿里巴巴",     domain: "alibaba.com",   ext: "png" },
+  { keyword: "蚂蚁集团",     domain: "antgroup.com",  ext: "svg" },
+  { keyword: "商汤集团",     domain: "sensetime.com", ext: "png" },
 ];
 
 const credentialIcon = (text) => {
   const match = CREDENTIAL_LOGOS.find(({ keyword }) => text.includes(keyword));
   if (match) {
-    return `<img class="credential-logo" src="./assets/logos/${match.domain}.png" alt="${match.keyword}" loading="lazy">`;
+    return `<img class="credential-logo" src="./assets/logos/${match.domain}.${match.ext}" alt="${match.keyword}" loading="lazy">`;
   }
   return `<span class="credential-star" aria-hidden="true">★</span>`;
 };

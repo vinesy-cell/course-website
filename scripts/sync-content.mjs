@@ -303,31 +303,40 @@ writeJson(path.join(projectRoot, ".last-sync.json"), {
   assetsCopied: Object.values(assets),
 });
 
-// ── 下载背书机构 logo（缓存到本地，避免依赖外部服务）──────────
-const CREDENTIAL_LOGO_DOMAINS = [
-  { keyword: "浙大城市学院", domain: "zucc.edu.cn" },
-  { keyword: "浙江大学",     domain: "zju.edu.cn" },
-  { keyword: "科大讯飞",     domain: "iflytek.com" },
-  { keyword: "阿里巴巴",     domain: "alibaba.com" },
-  { keyword: "蚂蚁集团",     domain: "antgroup.com" },
-  { keyword: "商汤集团",     domain: "sensetime.com" },
+// ── 下载/生成背书机构 logo（本地缓存，不依赖外部服务）────────
+const makeSvgBadge = (text, bg = "#243f50") =>
+  `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">` +
+  `<rect width="32" height="32" rx="5" fill="${bg}"/>` +
+  `<text x="16" y="21" text-anchor="middle" dominant-baseline="middle" ` +
+  `fill="white" font-family="PingFang SC,sans-serif" font-size="${text.length > 1 ? 11 : 16}" font-weight="700">${text}</text>` +
+  `</svg>`;
+
+const CREDENTIAL_LOGO_SOURCES = [
+  { domain: "zucc.edu.cn",   ext: "svg", svgBadge: makeSvgBadge("城院", "#1a5c8a") },
+  { domain: "zju.edu.cn",    ext: "svg", svgBadge: makeSvgBadge("浙大", "#003087") },
+  { domain: "iflytek.com",   ext: "png", fetchUrl: `https://www.google.com/s2/favicons?domain=iflytek.com&sz=64` },
+  { domain: "alibaba.com",   ext: "png", fetchUrl: `https://www.google.com/s2/favicons?domain=alibaba.com&sz=64` },
+  { domain: "antgroup.com",  ext: "svg", fetchUrl: `https://cdn.simpleicons.org/antdesign/06AED4` },
+  { domain: "sensetime.com", ext: "png", fetchUrl: `https://www.google.com/s2/favicons?domain=sensetime.com&sz=64` },
 ];
 const logosDir = path.join(projectRoot, "public", "assets", "logos");
 ensureDirectory(logosDir);
-for (const { domain } of CREDENTIAL_LOGO_DOMAINS) {
-  const localFile = path.join(logosDir, `${domain}.png`);
-  if (!fs.existsSync(localFile)) {
+for (const { domain, ext, fetchUrl, svgBadge } of CREDENTIAL_LOGO_SOURCES) {
+  const localFile = path.join(logosDir, `${domain}.${ext}`);
+  if (fs.existsSync(localFile)) continue;
+  if (svgBadge) {
+    fs.writeFileSync(localFile, svgBadge, "utf8");
+    console.log(`Logo 生成：${domain}`);
+  } else if (fetchUrl) {
     try {
-      const res = await fetch(
-        `https://www.google.com/s2/favicons?domain=${domain}&sz=64`,
-        { signal: AbortSignal.timeout(8000) },
-      );
+      const res = await fetch(fetchUrl, { signal: AbortSignal.timeout(8000) });
       if (res.ok) {
-        fs.writeFileSync(localFile, Buffer.from(await res.arrayBuffer()));
+        const buf = Buffer.from(await res.arrayBuffer());
+        fs.writeFileSync(localFile, buf);
         console.log(`Logo 已下载：${domain}`);
       }
     } catch {
-      // 网络不可用时跳过，不影响其他内容
+      // 网络不可用时跳过
     }
   }
 }
