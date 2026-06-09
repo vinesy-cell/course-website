@@ -762,9 +762,6 @@ img {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 560px;
-  object-fit: cover;
-  object-position: top;
 }
 
 /* ─── 思想与洞察 ─────────────────────────────────────── */
