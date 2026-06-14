@@ -289,7 +289,7 @@ img {
 /* ─── Hero 贴图横向滚动带 ──────────────────────────────── */
 /* 用 CSS 变量统一容器与图片高度，避免 % 高度在 flex 中解析失败 */
 :root {
-  --sticker-h: clamp(380px, 48vh, 480px);
+  --sticker-h: clamp(420px, 48vh, 480px);
 }
 
 .sticker-track-wrap {
