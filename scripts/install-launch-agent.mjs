@@ -8,7 +8,8 @@ const label = "com.maxlee.course-site-robot";
 const agents = path.join(os.homedir(), "Library", "LaunchAgents");
 const plistPath = path.join(agents, `${label}.plist`);
 const robotScript = path.join(projectRoot, "scripts", "robot.mjs");
-const logPath = path.join(projectRoot, ".robot-service.log");
+const logs = path.join(os.homedir(), "Library", "Logs");
+const logPath = path.join(logs, "course-site-robot.log");
 const executablePath = [
   path.dirname(process.execPath),
   "/opt/homebrew/bin",
@@ -20,6 +21,7 @@ const executablePath = [
 ].join(":");
 
 fs.mkdirSync(agents, { recursive: true });
+fs.mkdirSync(logs, { recursive: true });
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
