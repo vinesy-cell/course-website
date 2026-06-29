@@ -18,7 +18,8 @@ const highlight = (text) =>
 // 背书标志映射（关键词从长到短排列，避免短的先匹配）
 const CREDENTIAL_LOGOS = [
   { keyword: "浙大城市学院", domain: "zucc.edu.cn",   ext: "svg" },
-  { keyword: "浙江大学",     domain: "zju.edu.cn",    ext: "svg" },
+  { keyword: "杭州市临平区小创园区联盟", domain: "linping-innovation-alliance", ext: "png", className: "credential-logo--alliance" },
+  { keyword: "浙江大学",     domain: "zju-official",  ext: "png", className: "credential-logo--zju" },
   { keyword: "科大讯飞",     domain: "iflytek.com",   ext: "png" },
   { keyword: "阿里巴巴",     domain: "alibaba.com",   ext: "png" },
   { keyword: "蚂蚁集团",     domain: "antgroup.com",  ext: "svg" },
@@ -28,7 +29,7 @@ const CREDENTIAL_LOGOS = [
 const credentialIcon = (text) => {
   const match = CREDENTIAL_LOGOS.find(({ keyword }) => text.includes(keyword));
   if (match) {
-    return `<img class="credential-logo" src="./assets/logos/${match.domain}.${match.ext}" alt="${match.keyword}" loading="lazy">`;
+    return `<img class="credential-logo ${match.className || ""}" src="./assets/logos/${match.domain}.${match.ext}" alt="${match.keyword}" loading="lazy">`;
   }
   return `<span class="credential-star" aria-hidden="true">★</span>`;
 };
@@ -84,22 +85,13 @@ function renderHero(data) {
     </div>
   `;
 
-  // 从持续更新的观点图中选取三张，形成稳定的编辑式首屏构图。
+  // 内容同步阶段已筛选最近 10 张并去重；复制一组用于无缝循环。
   if (data.stickers && data.stickers.length > 0) {
     visual.classList.add("sticker-mode");
     const items = data.stickers
-      .slice(0, 3)
-      .map(
-        (file, index) => `
-          <figure class="hero-gallery-item hero-gallery-item--${index + 1}">
-            <img src="./assets/stickers/${encodeURIComponent(file)}" alt="李凯思考笔记观点图 ${index + 1}" ${index === 0 ? "" : 'loading="lazy"'} />
-          </figure>`,
-      )
+      .map((file, index) => `<img src="./assets/stickers/${encodeURIComponent(file)}" alt="李凯思考笔记近期观点 ${index + 1}" ${index === 0 ? "" : 'loading="lazy"'} />`)
       .join("");
-    visual.innerHTML = `
-      <div class="hero-gallery">${items}</div>
-      <p class="hero-gallery-caption"><span>观点图集</span><span>从真实任务出发，持续更新</span></p>
-    `;
+    visual.innerHTML = `<div class="sticker-track-wrap"><div class="sticker-track">${items}${items}</div></div><p class="hero-gallery-caption"><span>近期观点</span><span>最近 ${data.stickers.length} 张 · 持续更新</span></p>`;
   }
 }
 
@@ -279,6 +271,7 @@ function renderInstructor(data) {
     </div>
     <figure class="poster-frame">
       <img src="./assets/${encodeURIComponent(data.assets.coursePoster)}" alt="李凯讲师海报" />
+      <figcaption><strong>李凯 Max</strong><span>AI 应用与数字化转型专家</span></figcaption>
     </figure>
   `;
 }

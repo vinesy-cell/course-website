@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import {
   bullets,
   childHeadings,
@@ -208,13 +209,21 @@ const assets = {
   coursePoster: "李凯_个人主视觉.png",
 };
 
-// 公众号贴图：扫描 05_视觉素材/公众号贴图/ 文件夹，取全部图片（按文件名排序）
+// 公众号贴图：按更新时间取最近 10 张；内容相同的文件只保留一份。
 const STICKER_EXTS = new Set([".jpg", ".jpeg", ".png", ".gif", ".webp"]);
 const stickersDir = source("05_视觉素材", "公众号贴图");
 const stickerFiles = fs.existsSync(stickersDir)
   ? fs.readdirSync(stickersDir)
       .filter((f) => STICKER_EXTS.has(path.extname(f).toLowerCase()))
-      .sort()
+      .map((file) => ({
+        file,
+        mtimeMs: fs.statSync(path.join(stickersDir, file)).mtimeMs,
+        hash: crypto.createHash("sha256").update(fs.readFileSync(path.join(stickersDir, file))).digest("hex"),
+      }))
+      .sort((a, b) => b.mtimeMs - a.mtimeMs || b.file.localeCompare(a.file, "zh-CN", { numeric: true }))
+      .filter((item, index, items) => items.findIndex((candidate) => candidate.hash === item.hash) === index)
+      .slice(0, 10)
+      .map((item) => item.file)
   : [];
 
 const siteData = {
@@ -296,10 +305,13 @@ for (const fileName of Object.values(assets)) {
   }
 }
 
-// 复制本周贴图到 public/assets/stickers/
+// 公共目录始终只保留本次选中的最近 10 张，避免旧图继续出现在网站资源中。
+const stickersOut = path.join(projectRoot, "public", "assets", "stickers");
+ensureDirectory(stickersOut);
+for (const existing of fs.readdirSync(stickersOut)) {
+  if (!stickerFiles.includes(existing)) fs.rmSync(path.join(stickersOut, existing));
+}
 if (stickerFiles.length > 0) {
-  const stickersOut = path.join(projectRoot, "public", "assets", "stickers");
-  ensureDirectory(stickersOut);
   for (const f of stickerFiles) {
     fs.copyFileSync(path.join(stickersDir, f), path.join(stickersOut, f));
   }
@@ -323,7 +335,8 @@ const makeSvgBadge = (text, bg = "#243f50") =>
 
 const CREDENTIAL_LOGO_SOURCES = [
   { domain: "zucc.edu.cn",   ext: "svg", svgBadge: makeSvgBadge("城院", "#1a5c8a") },
-  { domain: "zju.edu.cn",    ext: "svg", svgBadge: makeSvgBadge("浙大", "#003087") },
+  { domain: "zju-official", ext: "svg", fetchUrl: "https://www.zju.edu.cn/_upload/tpl/0b/bf/3007/template3007/static/media/mlogo.66388675484ae2a807b2ad65b1d31ca9.svg" },
+  { domain: "linping-innovation-alliance", ext: "png", fetchUrl: "https://mmbiz.qpic.cn/mmbiz_png/4lrlUoJLhe3yq0OjVNDsI1JPIBCdHXp3TSX2V5cNqTQbFO3edDcXfjX1uxeC9LgRUqhYsovNo07JtN11zJhrnQ/0?wx_fmt=png" },
   { domain: "iflytek.com",   ext: "png", fetchUrl: `https://www.google.com/s2/favicons?domain=iflytek.com&sz=64` },
   { domain: "alibaba.com",   ext: "png", fetchUrl: `https://www.google.com/s2/favicons?domain=alibaba.com&sz=64` },
   { domain: "antgroup.com",  ext: "svg", fetchUrl: `https://cdn.simpleicons.org/antdesign/06AED4` },

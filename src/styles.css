@@ -302,43 +302,40 @@ img {
   border-right: 0;
 }
 
-/* ─── Hero 编辑式观点图集 ──────────────────────────────── */
-.hero-gallery {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  height: clamp(430px, 52vw, 580px);
-}
-
-.hero-gallery-item {
-  min-width: 0;
-  margin: 0;
+/* ─── Hero 近期观点滚动图带 ──────────────────────────────── */
+.sticker-track-wrap {
+  height: clamp(430px, 48vw, 560px);
   overflow: hidden;
   border: 1px solid rgba(23, 35, 43, 0.1);
-  background: var(--blue-soft);
+  box-shadow: var(--shadow);
+  mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
 }
 
-.hero-gallery-item--1 {
-  grid-row: 1 / 3;
+.sticker-track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  gap: 8px;
+  animation: sticker-scroll 70s linear infinite;
 }
 
-.hero-gallery-item img {
-  width: 100%;
+.sticker-track:hover {
+  animation-play-state: paused;
+}
+
+.sticker-track img {
+  width: auto;
   height: 100%;
   min-height: 0;
-  object-fit: cover;
-  object-position: center;
+  flex: 0 0 auto;
+  object-fit: contain;
   box-shadow: none;
-  transition: transform 500ms ease;
 }
 
-.hero-gallery-item:not(.hero-gallery-item--1) img {
-  object-position: center top;
-}
-
-.hero-gallery-item:hover img {
-  transform: scale(1.025);
+@keyframes sticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 4px)); }
 }
 
 .hero-gallery-caption {
@@ -657,31 +654,33 @@ img {
 
 /* ─── 实践方法 ──────────────────────────────────────── */
 .practice {
-  background: var(--blue-dark);
-  color: #fff;
+  background: linear-gradient(135deg, #edf1ef 0%, #f5f4f0 70%);
+  color: var(--ink);
+  border-block: 1px solid var(--line);
 }
 
-.practice .section-label,
-.practice .section-title {
-  color: #fff;
+.practice .section-label {
+  color: var(--brass);
 }
 
 .practice-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
+  gap: 16px;
   margin-top: var(--sp-6);
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  border: 0;
 }
 
 .practice-card {
   padding: clamp(24px, 3vw, 40px);
-  background: rgba(15, 43, 58, 0.96);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--line);
+  box-shadow: 0 16px 40px rgba(27, 42, 52, 0.06);
 }
 
 .practice-index {
-  color: var(--brass-light);
+  color: var(--brass);
   font-family: Georgia, serif;
   font-size: var(--text-sm);
 }
@@ -696,7 +695,7 @@ img {
 
 .practice-card p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--muted);
   font-size: var(--text-base);
   line-height: 1.72;
 }
@@ -763,7 +762,7 @@ img {
 /* ─── 讲师介绍 ──────────────────────────────────────── */
 .instructor {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.55fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(380px, 0.85fr);
   gap: clamp(40px, 6vw, 96px);
   align-items: start;
 }
@@ -798,11 +797,22 @@ img {
 
 .credential-logo {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
   border-radius: 4px;
   object-fit: contain;
   background: var(--paper);
+}
+
+.credential-logo--zju {
+  width: 104px;
+  padding: 7px 9px;
+  background: #003087;
+}
+
+.credential-logo--alliance {
+  object-fit: cover;
+  object-position: center;
 }
 
 .credential-star {
@@ -826,9 +836,11 @@ img {
 }
 
 .poster-frame {
-  width: min(100%, 380px);
+  width: min(100%, 500px);
   margin: 0;
-  border: 1px solid var(--line);
+  padding: 12px;
+  border: 0;
+  background: var(--blue-dark);
   box-shadow: var(--shadow);
   overflow: hidden;
   align-self: start;
@@ -838,9 +850,28 @@ img {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 2 / 3;
-  object-fit: cover;
-  object-position: center top;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+.poster-frame figcaption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 4px 4px;
+  color: white;
+}
+
+.poster-frame figcaption strong {
+  font-family: var(--font-display);
+  font-size: 21px;
+}
+
+.poster-frame figcaption span {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: var(--text-xs);
 }
 
 /* ─── 思想与洞察 ─────────────────────────────────────── */
@@ -1127,12 +1158,12 @@ img {
     margin-top: 16px;
   }
 
-  .hero-gallery {
-    height: clamp(420px, 68vw, 620px);
+  .sticker-track-wrap {
+    height: clamp(420px, 68vw, 600px);
   }
 
   .poster-frame {
-    width: min(100%, 420px);
+    width: min(100%, 520px);
     justify-self: center;
   }
 
@@ -1209,8 +1240,7 @@ img {
     display: grid;
   }
 
-  .hero-gallery {
-    grid-template-columns: 1.2fr 0.8fr;
+  .sticker-track-wrap {
     height: min(108vw, 430px);
   }
 

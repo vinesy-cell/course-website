@@ -11,6 +11,8 @@ const required = [
   "dist/assets/微信二维码_李凯_IMG_9523.JPG",
   "dist/assets/公众号二维码_李凯思考笔记_IMG_9524.JPG",
   "dist/assets/李凯_个人主视觉.png",
+  "dist/assets/logos/zju-official.png",
+  "dist/assets/logos/linping-innovation-alliance.png",
 ];
 
 const missing = required.filter((file) => !fs.existsSync(path.join(projectRoot, file)));
@@ -33,6 +35,12 @@ if (found.length) {
 
 if (!data.hero?.title || !data.contacts?.phone || !data.contacts?.email) {
   console.error("关键网站内容不完整");
+  process.exit(1);
+}
+
+const stickers = data.stickers || [];
+if (stickers.length > 10 || new Set(stickers).size !== stickers.length) {
+  console.error("首页近期观点图片必须不超过 10 张且不能重复");
   process.exit(1);
 }
 
