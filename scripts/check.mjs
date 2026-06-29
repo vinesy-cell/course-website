@@ -36,8 +36,24 @@ if (!data.hero?.title || !data.contacts?.phone || !data.contacts?.email) {
   process.exit(1);
 }
 
-if (data.cooperation?.plans?.length !== 4 || data.practice?.length !== 3) {
-  console.error("新增合作方案或实践方法内容不完整");
+const requiredPracticeTitles = [
+  "同时理解五种业务语言",
+  "从管理者回到真实问题现场",
+  "用三步把 AI 放进业务",
+  "AI 赋能产业招商",
+  "AI 赋能园区运营",
+  "AI 赋能产业研究",
+];
+const practiceTitles = new Set(
+  (data.practice || []).map((item) => item.title),
+);
+const missingPracticeTitles = requiredPracticeTitles.filter(
+  (title) => !practiceTitles.has(title),
+);
+
+if (data.cooperation?.plans?.length !== 4 || missingPracticeTitles.length) {
+  console.error("合作方案或实践方法内容不完整");
+  missingPracticeTitles.forEach((title) => console.error(`- 缺少：${title}`));
   process.exit(1);
 }
 
