@@ -57,6 +57,11 @@ fs.writeFileSync(plistPath, xml, "utf8");
 spawnSync("launchctl", ["bootout", `gui/${process.getuid()}`, plistPath], {
   stdio: "ignore",
 });
+spawnSync(
+  "launchctl",
+  ["enable", `gui/${process.getuid()}/${label}`],
+  { stdio: "ignore" },
+);
 const result = spawnSync(
   "launchctl",
   ["bootstrap", `gui/${process.getuid()}`, plistPath],
