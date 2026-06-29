@@ -39,6 +39,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 84px;
 }
 
 body {
@@ -330,6 +331,10 @@ img {
   object-position: center;
   box-shadow: none;
   transition: transform 500ms ease;
+}
+
+.hero-gallery-item:not(.hero-gallery-item--1) img {
+  object-position: center top;
 }
 
 .hero-gallery-item:hover img {
@@ -1158,6 +1163,10 @@ img {
 
 /* ─── 响应式：小屏 (≤ 680px) ─────────────────────────── */
 @media (max-width: 680px) {
+  html {
+    scroll-padding-top: 72px;
+  }
+
   .site-header {
     min-height: 64px;
   }
