@@ -107,11 +107,20 @@ const deliveryContentHeading = findHeading(homepageDoc, "可开展内容", {
   within: deliveryHeading,
 });
 
-const cooperationParent = findHeading(homepageDoc, "三档合作方案");
+const practiceParent = findHeading(homepageDoc, "实践方法与访谈观点");
+const practice = practiceParent
+  ? childHeadings(homepageDoc, practiceParent).map((heading) => ({
+      title: heading.title,
+      description: firstParagraph(homepageDoc, heading),
+    }))
+  : [];
+
+const cooperationParent = findHeading(homepageDoc, "合作方案");
 const cooperationTitles = [
   "AI产业场景诊断服务",
   "AI产业场景闭门研讨 / 专题内训",
   "AI场景落地行动工作坊",
+  "CEO AI私教与内容陪跑",
 ];
 const cooperation = cooperationTitles.map((title) => {
   const heading = findHeading(homepageDoc, title, { within: cooperationParent });
@@ -217,7 +226,7 @@ const siteData = {
     sourceRoot: config.contentRoot,
     publicPrices: Boolean(config.publicPrices),
   },
-  navigation: ["课程方案", "场景工作坊", "合作方式", "讲师介绍", "思想与洞察", "联系"],
+  navigation: ["课程方案", "场景工作坊", "实践方法", "合作方式", "讲师介绍", "思想与洞察", "联系"],
   hero: {
     title: h1Title,
     tagline: heroValue("顶部标语"),
@@ -249,12 +258,13 @@ const siteData = {
     ),
   },
   instructor: {
-    paragraphs: paragraphs(sectionLines(homepageDoc, instructorHeading)).slice(0, 2),
+    paragraphs: paragraphs(sectionLines(homepageDoc, instructorHeading)).slice(0, 3),
     research: firstParagraph(homepageDoc, researchHeading),
     credentials: bullets(sectionLines(homepageDoc, credentialsHeading)),
   },
+  practice,
   trust: bullets(sectionLines(homepageDoc, trustHeading)).filter(
-    (item) => !item.includes("07_课程网站/"),
+    (item) => !/(07|08)_课程网站\//.test(item),
   ),
   values: bullets(sectionLines(homepageDoc, valuesHeading)),
   conversion: {

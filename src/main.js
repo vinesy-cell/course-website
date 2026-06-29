@@ -13,7 +13,7 @@ const highlight = (text) =>
     .replace(/浙江大学/g, '<span class="kw">浙江大学</span>')
     .replace(/副总裁/g, '<span class="kw">副总裁</span>')
     .replace(/MBA/g, '<span class="kw">MBA</span>')
-    .replace(/19年/g, '<span class="kw">19年</span>');
+    .replace(/20年/g, '<span class="kw">20年</span>');
 
 // 背书标志映射（关键词从长到短排列，避免短的先匹配）
 const CREDENTIAL_LOGOS = [
@@ -47,6 +47,7 @@ const sectionHeader = (label, title, intro = "") => `
 const navigationTargets = {
   课程方案: "#topics",
   场景工作坊: "#delivery",
+  实践方法: "#practice",
   合作方式: "#cooperation",
   讲师介绍: "#instructor",
   思想与洞察: "#insights",
@@ -211,10 +212,34 @@ function renderDelivery(data) {
   `;
 }
 
+function renderPractice(data) {
+  const section = document.querySelector("#practice");
+  if (!data.practice || data.practice.length === 0) {
+    section.hidden = true;
+    return;
+  }
+  section.innerHTML = `
+    ${sectionHeader("04 / 实践方法", "从理解复杂问题，到跑出最小闭环")}
+    <div class="practice-grid">
+      ${data.practice
+        .map(
+          (item, index) => `
+            <article class="practice-card">
+              <span class="practice-index">${String(index + 1).padStart(2, "0")}</span>
+              <h3>${escapeHtml(item.title)}</h3>
+              <p>${escapeHtml(item.description)}</p>
+            </article>
+          `,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
 function renderCooperation(data) {
   const section = document.querySelector("#cooperation");
   section.innerHTML = `
-    ${sectionHeader("04 / 合作方式", "从诊断建立判断，到工作坊形成行动", data.cooperation.intro)}
+    ${sectionHeader("05 / 合作方式", "从诊断建立判断，到工作坊形成行动", data.cooperation.intro)}
     <div class="plan-list">
       ${data.cooperation.plans
         .map(
@@ -239,7 +264,7 @@ function renderInstructor(data) {
   const section = document.querySelector("#instructor");
   section.innerHTML = `
     <div class="instructor-copy">
-      ${sectionHeader("05 / 讲师介绍", "从园区与组织实践出发，让 AI 进入业务现场")}
+      ${sectionHeader("06 / 讲师介绍", "从园区与组织实践出发，让 AI 进入业务现场")}
       ${data.instructor.paragraphs.map((item) => `<p>${highlight(item)}</p>`).join("")}
       <p class="instructor-research">${escapeHtml(data.instructor.research)}</p>
       <p class="credentials-label">部分认证与专业背书</p>
@@ -262,7 +287,7 @@ function renderInsights(data) {
     return;
   }
   section.innerHTML = `
-    ${sectionHeader("06 / 思想与洞察", "产业园区与 AI 落地的持续研究与观察")}
+    ${sectionHeader("07 / 思想与洞察", "产业园区与 AI 落地的持续研究与观察")}
     <div class="insight-grid">
       ${data.insights
         .map(
@@ -292,7 +317,7 @@ function renderContact(data) {
   section.innerHTML = `
     <div class="contact-layout">
       <div>
-        ${sectionHeader("07 / 联系", "先把一个真实问题说清楚")}
+        ${sectionHeader("08 / 联系", "先把一个真实问题说清楚")}
         <p>${escapeHtml(data.conversion.paragraphs[0] || "")}</p>
         <div class="contact-links">
           <a href="tel:${escapeHtml(data.contacts.phone)}"><span>电话</span><strong>${escapeHtml(data.contacts.phone)}</strong></a>
@@ -348,6 +373,7 @@ async function main() {
   renderCourseCatalog(data);
   renderCourses(data);
   renderDelivery(data);
+  renderPractice(data);
   renderCooperation(data);
   renderInstructor(data);
   renderInsights(data);

@@ -10,6 +10,7 @@ const required = [
   "dist/assets/hero-system.png",
   "dist/assets/微信二维码_李凯_IMG_9523.JPG",
   "dist/assets/公众号二维码_李凯思考笔记_IMG_9524.JPG",
+  "dist/assets/李凯_个人主视觉.png",
 ];
 
 const missing = required.filter((file) => !fs.existsSync(path.join(projectRoot, file)));
@@ -32,6 +33,11 @@ if (found.length) {
 
 if (!data.hero?.title || !data.contacts?.phone || !data.contacts?.email) {
   console.error("关键网站内容不完整");
+  process.exit(1);
+}
+
+if (data.cooperation?.plans?.length !== 4 || data.practice?.length !== 3) {
+  console.error("新增合作方案或实践方法内容不完整");
   process.exit(1);
 }
 
