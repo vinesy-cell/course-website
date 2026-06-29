@@ -73,30 +73,33 @@ function renderNavigation(data) {
 function renderHero(data) {
   const hero = document.querySelector(".hero-copy");
   const visual = document.querySelector(".hero-visual");
-  const actions = data.hero.actions.length
-    ? data.hero.actions
-    : ["发来3个真实问题", "了解课程方案"];
   hero.innerHTML = `
+    <p class="hero-kicker">AI × 真实业务场景</p>
     <h1>${data.hero.title.split("\n").map(escapeHtml).join("<br>")}</h1>
     <p class="hero-subtitle">${escapeHtml(data.hero.subtitle)}</p>
     <p class="hero-instructor">${escapeHtml(data.hero.instructor)}</p>
     <div class="hero-actions">
-      <a class="button" href="#contact">${escapeHtml(actions[1] || actions[0])}</a>
-      <a class="button secondary" href="#courses">${escapeHtml(actions[0])}</a>
+      <a class="button" href="#contact">带着真实问题沟通</a>
+      <a class="button secondary" href="#courses">查看课程方案</a>
     </div>
   `;
 
-  // 若有本周贴图，用横向慢速滚动带替换 hero 静态图
+  // 从持续更新的观点图中选取三张，形成稳定的编辑式首屏构图。
   if (data.stickers && data.stickers.length > 0) {
     visual.classList.add("sticker-mode");
     const items = data.stickers
+      .slice(0, 3)
       .map(
-        (f) =>
-          `<img src="./assets/stickers/${encodeURIComponent(f)}" alt="公众号配图" loading="lazy" />`,
+        (file, index) => `
+          <figure class="hero-gallery-item hero-gallery-item--${index + 1}">
+            <img src="./assets/stickers/${encodeURIComponent(file)}" alt="李凯思考笔记观点图 ${index + 1}" ${index === 0 ? "" : 'loading="lazy"'} />
+          </figure>`,
       )
       .join("");
-    // 复制一组实现无缝循环
-    visual.innerHTML = `<div class="sticker-track-wrap"><div class="sticker-track">${items}${items}</div></div>`;
+    visual.innerHTML = `
+      <div class="hero-gallery">${items}</div>
+      <p class="hero-gallery-caption"><span>观点图集</span><span>从真实任务出发，持续更新</span></p>
+    `;
   }
 }
 

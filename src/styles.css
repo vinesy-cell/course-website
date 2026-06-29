@@ -14,12 +14,15 @@
   --radius: 4px;
   --max: 1240px;
 
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --font-display: "Songti SC", "STSong", "Noto Serif CJK SC", Georgia, serif;
+
   /* 字号比例（以 15px 为基准，约 1.2 模数） */
   --text-xs:   12px;
-  --text-sm:   13px;
-  --text-base: 15px;
-  --text-md:   16px;
-  --text-lg:   18px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-md:   18px;
+  --text-lg:   22px;
 
   /* 间距节奏（8px 倍数） */
   --sp-2:  16px;
@@ -46,10 +49,10 @@ body {
     linear-gradient(90deg, rgba(53, 90, 112, 0.035) 1px, transparent 1px),
     var(--paper);
   background-size: 40px 40px;
-  font-family:
-    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: var(--text-base);
-  line-height: 1.75;
+  line-height: 1.72;
+  font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
 
@@ -109,7 +112,9 @@ img {
   justify-content: center;
   gap: clamp(18px, 3vw, 40px);
   color: var(--muted);
-  font-size: var(--text-sm);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 .site-nav a {
@@ -171,7 +176,7 @@ img {
 .section-shell {
   width: min(var(--max), calc(100% - 8vw));
   margin-inline: auto;
-  padding-block: clamp(64px, 9vw, 120px);
+  padding-block: clamp(72px, 8vw, 108px);
 }
 
 /* ─── 通用区块标题组 ──────────────────────────────── */
@@ -187,11 +192,12 @@ img {
 .section-title {
   max-width: 800px;
   margin: 0;
-  font-family: "Songti SC", "STSong", Georgia, serif;
-  font-size: clamp(22px, 2.8vw, 36px);
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.2vw, 44px);
   font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -0.02em;
+  line-height: 1.22;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
 }
 
 .section-intro {
@@ -199,36 +205,45 @@ img {
   margin: var(--sp-2) 0 0;
   color: var(--muted);
   font-size: var(--text-base);
-  line-height: 1.8;
+  line-height: 1.75;
 }
 
 /* ─── 首屏 ──────────────────────────────────────────── */
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 1fr);
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
   min-height: calc(100svh - 72px);
   align-items: center;
-  gap: clamp(40px, 6vw, 96px);
+  gap: clamp(48px, 6vw, 88px);
   padding-block: clamp(56px, 7vw, 96px);
 }
 
 .hero h1 {
   max-width: 680px;
   margin: 0 0 var(--sp-3);
-  font-family: "Songti SC", "STSong", Georgia, serif;
-  font-size: clamp(30px, 4.2vw, 52px);
+  font-family: var(--font-display);
+  font-size: clamp(40px, 4.6vw, 64px);
   font-weight: 600;
-  line-height: 1.22;
-  letter-spacing: -0.02em;
+  line-height: 1.16;
+  letter-spacing: -0.045em;
   text-wrap: balance;
+}
+
+.hero-kicker {
+  margin: 0 0 18px;
+  color: var(--brass);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
 .hero-subtitle {
   max-width: 620px;
   margin: 0 0 var(--sp-2);
   color: var(--muted);
-  font-size: clamp(14px, 1.2vw, 17px);
-  line-height: 1.85;
+  font-size: clamp(16px, 1.35vw, 18px);
+  line-height: 1.82;
 }
 
 .hero-instructor {
@@ -236,7 +251,7 @@ img {
   margin: 0;
   color: var(--blue);
   font-size: var(--text-sm);
-  line-height: 1.8;
+  line-height: 1.75;
 }
 
 .hero-actions {
@@ -286,45 +301,54 @@ img {
   border-right: 0;
 }
 
-/* ─── Hero 贴图横向滚动带 ──────────────────────────────── */
-/* 用 CSS 变量统一容器与图片高度，避免 % 高度在 flex 中解析失败 */
-:root {
-  --sticker-h: clamp(420px, 48vh, 480px);
+/* ─── Hero 编辑式观点图集 ──────────────────────────────── */
+.hero-gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  height: clamp(430px, 52vw, 580px);
 }
 
-.sticker-track-wrap {
+.hero-gallery-item {
+  min-width: 0;
+  margin: 0;
   overflow: hidden;
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  height: var(--sticker-h);
-  /* 两侧柔光渐隐 */
-  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  border: 1px solid rgba(23, 35, 43, 0.1);
+  background: var(--blue-soft);
 }
 
-.sticker-track {
+.hero-gallery-item--1 {
+  grid-row: 1 / 3;
+}
+
+.hero-gallery-item img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  object-position: center;
+  box-shadow: none;
+  transition: transform 500ms ease;
+}
+
+.hero-gallery-item:hover img {
+  transform: scale(1.025);
+}
+
+.hero-gallery-caption {
   display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  width: max-content;
-  animation: sticker-scroll 52s linear infinite;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
 }
 
-.sticker-track:hover {
-  animation-play-state: paused;
-}
-
-.sticker-track img {
-  /* 直接使用与容器相同的高度变量，不依赖 % 解析 */
-  height: var(--sticker-h);
-  width: auto;
-  display: block;
-  flex-shrink: 0;
-}
-
-@keyframes sticker-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+.hero-gallery-caption span:first-child {
+  color: var(--brass);
+  font-weight: 700;
 }
 
 /* 滚动带模式下隐藏金色装饰边框 */
@@ -340,7 +364,7 @@ img {
 .pain-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  margin: var(--sp-6) 0 0;
+  margin: var(--sp-5) 0 0;
   border-top: 1px solid var(--line);
 }
 
@@ -396,7 +420,7 @@ img {
 
 .recommendation-item h3 {
   margin: 0 0 10px;
-  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-family: var(--font-display);
   font-size: clamp(17px, 1.6vw, 22px);
   font-weight: 500;
   line-height: 1.4;
@@ -413,12 +437,12 @@ img {
 .catalog-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 12px;
   margin-top: var(--sp-5);
 }
 
 .catalog-card {
-  padding: 20px 22px 22px;
+  padding: 24px 24px 26px;
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.07);
   border-top: 3px solid rgba(255, 255, 255, 0.2);
@@ -454,7 +478,7 @@ img {
 
 .catalog-list li {
   font-size: var(--text-sm);
-  line-height: 1.5;
+  line-height: 1.6;
   color: rgba(255, 255, 255, 0.82);
   padding-left: 14px;
   position: relative;
@@ -498,8 +522,8 @@ img {
 
 .course-block h3 {
   margin: 14px 0 14px;
-  font-family: "Songti SC", "STSong", Georgia, serif;
-  font-size: clamp(18px, 1.8vw, 26px);
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2vw, 30px);
   font-weight: 600;
   line-height: 1.35;
 }
@@ -508,7 +532,7 @@ img {
   margin: 0;
   color: var(--muted);
   font-size: var(--text-base);
-  line-height: 1.75;
+  line-height: 1.72;
 }
 
 .course-details {
@@ -659,8 +683,8 @@ img {
 
 .practice-card h3 {
   margin: 18px 0 14px;
-  font-family: "Songti SC", "STSong", Georgia, serif;
-  font-size: clamp(19px, 1.8vw, 26px);
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2vw, 30px);
   font-weight: 600;
   line-height: 1.4;
 }
@@ -669,12 +693,12 @@ img {
   margin: 0;
   color: rgba(255, 255, 255, 0.75);
   font-size: var(--text-base);
-  line-height: 1.8;
+  line-height: 1.72;
 }
 
 .plan {
   display: flex;
-  min-height: 460px;
+  min-height: 440px;
   flex-direction: column;
   padding: clamp(24px, 2.5vw, 36px);
   background: var(--paper-strong);
@@ -694,8 +718,8 @@ img {
 
 .plan h3 {
   margin: 0 0 16px;
-  font-family: "Songti SC", "STSong", Georgia, serif;
-  font-size: clamp(17px, 1.5vw, 22px);
+  font-family: var(--font-display);
+  font-size: clamp(24px, 1.8vw, 28px);
   font-weight: 600;
   line-height: 1.35;
 }
@@ -712,7 +736,7 @@ img {
   margin: 0 0 20px;
   color: var(--muted);
   font-size: var(--text-base);
-  line-height: 1.7;
+  line-height: 1.68;
 }
 
 .plan .clean-list {
@@ -734,7 +758,7 @@ img {
 /* ─── 讲师介绍 ──────────────────────────────────────── */
 .instructor {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
+  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.55fr);
   gap: clamp(40px, 6vw, 96px);
   align-items: start;
 }
@@ -743,7 +767,7 @@ img {
   margin: 0 0 18px;
   color: var(--muted);
   font-size: var(--text-base);
-  line-height: 1.8;
+  line-height: 1.75;
 }
 
 .credential-list {
@@ -797,6 +821,7 @@ img {
 }
 
 .poster-frame {
+  width: min(100%, 380px);
   margin: 0;
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
@@ -808,6 +833,9 @@ img {
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  object-position: center top;
 }
 
 /* ─── 思想与洞察 ─────────────────────────────────────── */
@@ -859,8 +887,8 @@ img {
 
 .insight-card h3 {
   margin: 0;
-  font-family: "Songti SC", "STSong", Georgia, serif;
-  font-size: clamp(15px, 1.3vw, 18px);
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1.5vw, 24px);
   font-weight: 600;
   line-height: 1.45;
 }
@@ -940,17 +968,20 @@ img {
 .qr-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 18px;
+  max-width: 420px;
+  justify-self: end;
 }
 
 .qr-card {
-  padding: 12px;
+  padding: 10px;
   background: white;
   color: var(--ink);
 }
 
 .qr-card img {
   width: 100%;
+  max-width: 180px;
   aspect-ratio: 1;
   object-fit: cover;
 }
@@ -1006,7 +1037,7 @@ img {
   margin: 0 0 var(--sp-3);
   color: var(--muted);
   font-size: var(--text-base);
-  line-height: 1.8;
+  line-height: 1.72;
   padding-left: 14px;
   border-left: 3px solid var(--brass);
 }
@@ -1084,10 +1115,24 @@ img {
 
   .hero {
     min-height: auto;
+    gap: 48px;
   }
 
   .hero-visual {
     margin-top: 16px;
+  }
+
+  .hero-gallery {
+    height: clamp(420px, 68vw, 620px);
+  }
+
+  .poster-frame {
+    width: min(100%, 420px);
+    justify-self: center;
+  }
+
+  .qr-grid {
+    justify-self: start;
   }
 
   .plan-list {
@@ -1132,7 +1177,7 @@ img {
 
   .section-shell {
     width: calc(100% - 32px);
-    padding-block: 56px;
+    padding-block: 64px;
   }
 
   .hero {
@@ -1140,21 +1185,30 @@ img {
   }
 
   .hero h1 {
-    font-size: 30px;
-    overflow-wrap: anywhere;
-    word-break: break-all;
+    font-size: clamp(36px, 10.4vw, 44px);
+    line-height: 1.18;
+    overflow-wrap: normal;
+    word-break: keep-all;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    line-height: 1.78;
   }
 
   .hero-actions {
     display: grid;
   }
 
-  .hero-visual img {
-    min-height: 260px;
+  .hero-gallery {
+    grid-template-columns: 1.2fr 0.8fr;
+    height: min(108vw, 430px);
   }
 
-  :root {
-    --sticker-h: clamp(240px, 38vw, 320px);
+  .hero-gallery-caption {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
   }
 
   .pain-list,
@@ -1165,8 +1219,24 @@ img {
     grid-template-columns: 1fr;
   }
 
-  .catalog-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .catalog-grid { grid-template-columns: 1fr; }
+
+  .section-title {
+    font-size: clamp(28px, 8.5vw, 36px);
+  }
+
+  .course-block h3,
+  .practice-card h3,
+  .plan h3 {
+    font-size: 24px;
+  }
+
+  .qr-grid {
+    width: min(100%, 220px);
+  }
+
+  .qr-card img {
+    max-width: none;
   }
 
   .pain-item:nth-child(odd),

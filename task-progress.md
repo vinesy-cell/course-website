@@ -1,58 +1,16 @@
-# 课程网站发布系统进度
+# 课程网站视觉与表达优化进度
 
-- 任务目标：基于 `/Users/maxlee/Documents/LK ThinkNote/07_课程网站` 搭建可发布的网站、内容同步机器人、本地后台和自动部署流程。
-- 开始时间：2026-06-08 14:21:56 CST
-- 处理范围：
-  - 内容源：`/Users/maxlee/Documents/LK ThinkNote/07_课程网站`
-  - 网站仓库：`/Users/maxlee/Documents/网站`
-  - 输出：静态网站、同步脚本、本地机器人后台、发布脚本、部署说明
-- 当前环境：
-  - Node.js：可用
-  - Git：可用
-  - 网站仓库：已初始化 Git 并纳入版本管理
-  - 远程仓库：`git@github.com:vinesy-cell/course-website.git`（已推送）
-  - GitHub 账号：`vinesy-cell`
-  - macOS 常驻机器人：已安装并运行
-  - **公网网站：已上线 ✅ https://vinesy-cell.github.io/course-website/**
+- 任务目标：重构全站字体逻辑、图片尺寸与裁切规则、区块节奏和信息表达层级。
+- 开始时间：2026-06-29 CST
+- 处理范围：`src/styles.css`、必要的 `src/main.js` / `src/index.html`、桌面与移动端浏览器验收。
 - 已完成批次：
-  - [x] 检查网站仓库、Node、Git 和部署凭据状态。
-  - [x] 建立项目目录骨架。
-  - [x] 实现内容同步脚本。
-  - [x] 实现静态网站构建与前端页面。
-  - [x] 实现本地机器人后台。
-  - [x] 实现内容变化实时监听器。
-  - [x] 实现 macOS 常驻后台服务安装与卸载脚本。
-  - [x] 实现发布脚本和 GitHub Pages workflow。
-  - [x] 本地构建、预览和浏览器验收。
-  - [x] 记录后台操作说明与发布接入方式。
-- 验证结果：
-  - `npm run content:sync`：通过
-  - `npm run build`：通过
-  - `npm run check`：通过
-  - 后台与本地预览：桌面端、移动端、导航、二维码、中文图片路径均已验收
-  - LaunchAgent：`com.maxlee.course-site-robot` 状态为 `running`，端口 `4174` 正在监听
-  - 后台网络边界：仅监听本机 `127.0.0.1`
-- 失败项：无
-- 已解决问题：
-  - 初次安装 LaunchAgent 后，其默认 `PATH` 无法找到 `npm`；安装脚本已补充运行环境并重新验证自动同步。
-  - [x] 生成 SSH 密钥并创建 GitHub 部署脚本与公网发布说明。
-- 已完成的公网发布准备：
-  - SSH 密钥已生成：`~/.ssh/id_ed25519_course`（ed25519，2026-06-08）
-  - SSH config 已写入 `~/.ssh/config`，指向 GitHub
-  - 一键配置脚本：`scripts/setup-github.mjs`，命令：`npm run setup:github <用户名> <仓库名>`
-  - 完整发布指南：`docs/发布到公网.md`
-- 公网发布：已全部完成 ✅（2026-06-08）
-  - SSH 公钥已添加到 GitHub 账号 `vinesy-cell`
-  - 仓库已创建并推送：`github.com/vinesy-cell/course-website`
-  - GitHub Pages Source 已设为 GitHub Actions
-  - 首次 Actions 构建成功（build 12s + deploy 9s）
-  - 网站已可公开访问
-- 公钥内容：`ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL0tOeNjXjH5jM7HaIgq5Y1bd/vmDZ0EWJ3ojMjLAsOn maxlee-course-site`
-- 公网网站：**https://vinesy-cell.github.io/course-website/**
-- 后台地址：`http://localhost:4174`
-- 本地预览：`http://localhost:4174/preview/`
-- 恢复入口：
-  - 后台操作：`/Users/maxlee/Documents/网站/docs/后台操作说明.md`
-  - 公网发布指南：`/Users/maxlee/Documents/网站/docs/发布到公网.md`
-  - Obsidian 说明：`/Users/maxlee/Documents/LK ThinkNote/07_课程网站/03_生成与发布/04_网站机器人后台操作说明.md`
-- 日常发布流程：在 Obsidian 更新内容 → 打开后台 http://localhost:4174 → 点击”发布上线”即可。
+  - [x] 建立进度与恢复断点。
+  - [ ] 记录当前页面桌面与移动端基线。
+  - [ ] 建立统一字体与排版层级。
+  - [ ] 优化首屏、内容图片、讲师海报与二维码比例。
+  - [ ] 优化区块留白、卡片密度和整体表达。
+  - [ ] 构建检查及桌面、移动端浏览器验收。
+- 失败项：无。
+- 跳过项：无。
+- 当前产物：进度文件。
+- 下一步断点：读取完整样式与页面结构，检查当前浏览器实际渲染。
