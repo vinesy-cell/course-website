@@ -185,7 +185,7 @@ if (fs.existsSync(optionalFiles.articles)) {
   const articlesDoc = readDocument(optionalFiles.articles);
   const allRows = table(articlesDoc.lines || articlesDoc);
   insights = allRows
-    .filter((row) => row["链接"] && row["链接"].trim() && row["链接"].trim() !== "（待填入）")
+    .filter((row) => /^https?:\/\//.test(row["链接"]?.trim() || ""))
     .slice(0, 6)
     .map((row) => ({
       title: cleanInline(row["标题"] || ""),
@@ -232,7 +232,6 @@ const siteData = {
     title: decisions["网站主标题"] || config.siteTitle,
     description: heroValue("副标题"),
     syncedAt: nowIso(),
-    sourceRoot: config.contentRoot,
     publicPrices: Boolean(config.publicPrices),
   },
   navigation: ["课程方案", "场景工作坊", "实践方法", "合作方式", "讲师介绍", "思想与洞察", "联系"],

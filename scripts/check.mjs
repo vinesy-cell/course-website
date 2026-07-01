@@ -7,6 +7,8 @@ const required = [
   "dist/styles.css",
   "dist/main.js",
   "dist/site-data.json",
+  "dist/robots.txt",
+  "dist/sitemap.xml",
   "dist/assets/hero-system.png",
   "dist/assets/微信二维码_李凯_IMG_9523.JPG",
   "dist/assets/公众号二维码_李凯思考笔记_IMG_9524.JPG",
@@ -26,6 +28,15 @@ const data = JSON.parse(
   fs.readFileSync(path.join(projectRoot, "dist", "site-data.json"), "utf8"),
 );
 const serialized = JSON.stringify(data);
+if (data.meta?.sourceRoot || serialized.includes("/Users/")) {
+  console.error("公开数据中不应包含本地文件路径");
+  process.exit(1);
+}
+
+if ((data.insights || []).some((item) => !/^https?:\/\//.test(item.url || ""))) {
+  console.error("思想与洞察中存在无效公开链接");
+  process.exit(1);
+}
 const forbidden = ["AI企业培训师", "浙江大学工商管理硕士"];
 const found = forbidden.filter((word) => serialized.includes(word));
 if (found.length) {

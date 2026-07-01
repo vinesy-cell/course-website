@@ -3,8 +3,7 @@
     "siteName": "李凯思考笔记",
     "title": "AI进入企业和园区业务现场的实战课程与工作坊",
     "description": "不是再学一个 AI 工具，也不是追逐工具测评，而是把 AI 放进企业经营、团队协同、园区招商和产业服务的真实任务里，做政府园区与企业之间的智能翻译器，形成可落地、可复用、能持续创造成果的组织能力。",
-    "syncedAt": "2026-06-29T07:24:05.436Z",
-    "sourceRoot": "/Users/maxlee/Documents/LK ThinkNote/08_课程网站",
+    "syncedAt": "2026-07-01T08:09:51.443Z",
     "publicPrices": true
   },
   "navigation": [
@@ -397,52 +396,52 @@
   ],
   "insights": [
     {
-      "title": "产业大脑招商：真正改变的不是找企业，而是城市的判断方式",
-      "url": "待补链接",
-      "category": "产业研究",
-      "color": "muted",
-      "date": "2026-06-12",
-      "excerpt": "招商不只是找企业名单，而是建立城市对产业的判断能力。"
-    },
-    {
-      "title": "产业园区下半场：当企业成长逻辑改变，园区价值必须重新定义",
-      "url": "待补链接",
-      "category": "产业园区",
-      "color": "blue",
-      "date": "2026-06-10",
-      "excerpt": "企业不再需要全能园区，而是需要能接住成长需求的外部能力接口。"
-    },
-    {
-      "title": "AI时代，真正稀缺的不是执行力，而是组织力",
-      "url": "待补链接",
+      "title": "企业上AI最难的，不是买工具，而是重新分配工作",
+      "url": "https://mp.weixin.qq.com/s/KUFA2ypPmaUpUVSHttVuvQ",
       "category": "AI落地",
       "color": "brass",
-      "date": "2026-06-08",
-      "excerpt": "AI进入业务后，组织能不能把任务拆清楚、把流程跑通，比会不会用工具更重要。"
+      "date": "2026-05-22",
+      "excerpt": "很多企业谈AI，已经不再停留在\"要不要用\"，卡住的往往是怎么真正把工作重新分配。"
     },
     {
-      "title": "政府做第一客户，关键不是开放场景，而是写清任务书",
-      "url": "待补链接",
-      "category": "产业研究",
-      "color": "muted",
-      "date": "2026-06-06",
-      "excerpt": "政府开放场景只是第一步，企业真正需要的是一张能接住的任务书。"
-    },
-    {
-      "title": "园区下半场，最该补的不是资源，而是外部能力接口",
-      "url": "待补链接",
-      "category": "产业园区",
-      "color": "blue",
-      "date": "2026-06-03",
-      "excerpt": "园区资源再多，如果没有外部能力接口，企业还是会自己去找。"
-    },
-    {
-      "title": "当AI把\"做出来\"变得容易，创业最稀缺的反而是判断力",
-      "url": "待补链接",
+      "title": "从\"知道AI\"到\"让AI真正走进业务现场\"",
+      "url": "https://mp.weixin.qq.com/s/j5-A6BffYqDcFIf1o5ldFQ",
       "category": "AI落地",
       "color": "brass",
-      "date": "2026-06-01",
-      "excerpt": "AI降低了执行门槛，但判断做什么、不做什么的能力变得更稀缺。"
+      "date": "2026-05-21",
+      "excerpt": "真正有价值的，不只是学会几个工具，而是思考如何让AI进入真实业务场景。"
+    },
+    {
+      "title": "未来园区最值钱的，可能不是空间，而是企业的外部操作系统",
+      "url": "https://mp.weixin.qq.com/s/aFWVv1gErH3um4A0qbn7jA",
+      "category": "产业园区",
+      "color": "blue",
+      "date": "2026-05-20",
+      "excerpt": "空间是硬件，企业真正依赖的是一套能降低运营摩擦、提供外部能力的服务体系。"
+    },
+    {
+      "title": "园区公司开始用AI，最该先接住的不是写材料，而是运营里的重复判断",
+      "url": "https://mp.weixin.qq.com/s/B39omR6YD0MjizRXr9siNA",
+      "category": "AI落地",
+      "color": "brass",
+      "date": "2026-05-15",
+      "excerpt": "写材料只是AI的入门用法，运营里大量重复的判断，才是真正值得AI接手的地方。"
+    },
+    {
+      "title": "未来的园区服务，不是做活动，而是把企业留下来的理由做成产品",
+      "url": "https://mp.weixin.qq.com/s/QS2ZQql5xK_mviCEyhbncw",
+      "category": "产业园区",
+      "color": "blue",
+      "date": "2026-05-13",
+      "excerpt": "服务做了不少，企业未必真的更依赖园区。能留住企业的，是让它觉得离开就会失去的东西。"
+    },
+    {
+      "title": "园区招商最该补的，不是资源，而是对企业经营的理解",
+      "url": "https://mp.weixin.qq.com/s/eT3jVDTHgW6lighW9N2dCA",
+      "category": "产业园区",
+      "color": "blue",
+      "date": "2026-05-11",
+      "excerpt": "资源讲完以后，企业还是没有被打动——问题往往不是政策不够，而是没搞清楚企业在经营什么。"
     }
   ],
   "stickers": [
