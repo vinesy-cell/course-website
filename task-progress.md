@@ -1,10 +1,10 @@
 # 课程网站发布系统进度
 
-- 任务目标：基于 `/Users/maxlee/Documents/LK ThinkNote/07_课程网站` 搭建可发布的网站、内容同步机器人、本地后台和自动部署流程。
+- 任务目标：基于 `/Users/maxlee/Documents/LK ThinkNote/08_课程网站` 搭建可发布的网站、内容同步机器人、本地后台和自动部署流程。
 - 开始时间：2026-06-08 14:21:56 CST
 - 处理范围：
-  - 内容源：`/Users/maxlee/Documents/LK ThinkNote/07_课程网站`
-  - 网站仓库：`/Users/maxlee/Documents/网站`
+  - 内容源：`/Users/maxlee/Documents/LK ThinkNote/08_课程网站`
+  - 网站工程：`/Users/maxlee/Documents/LK ThinkNote/08_课程网站/06_网站工程`
   - 输出：静态网站、同步脚本、本地机器人后台、发布脚本、部署说明
 - 当前环境：
   - Node.js：可用
@@ -52,9 +52,9 @@
 - 后台地址：`http://localhost:4174`
 - 本地预览：`http://localhost:4174/preview/`
 - 恢复入口：
-  - 后台操作：`/Users/maxlee/Documents/网站/docs/后台操作说明.md`
-  - 公网发布指南：`/Users/maxlee/Documents/网站/docs/发布到公网.md`
-  - Obsidian 说明：`/Users/maxlee/Documents/LK ThinkNote/07_课程网站/03_生成与发布/04_网站机器人后台操作说明.md`
+  - 后台操作：`/Users/maxlee/Documents/LK ThinkNote/08_课程网站/06_网站工程/docs/后台操作说明.md`
+  - 公网发布指南：`/Users/maxlee/Documents/LK ThinkNote/08_课程网站/06_网站工程/docs/发布到公网.md`
+  - Obsidian 说明：`/Users/maxlee/Documents/LK ThinkNote/08_课程网站/03_生成与发布/04_网站机器人后台操作说明.md`
 - 日常发布流程：在 Obsidian 更新内容 → 打开后台 http://localhost:4174 → 点击”发布上线”即可。
 
 ---

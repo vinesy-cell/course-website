@@ -18,8 +18,10 @@ Obsidian 内容源
 
 - 网站机器人后台：`http://localhost:4174`
 - 本地网站预览：`http://localhost:4174/preview/`
-- 内容源：`/Users/maxlee/Documents/LK ThinkNote/07_课程网站`
-- 网站仓库：`/Users/maxlee/Documents/网站`
+- 内容源：`/Users/maxlee/Documents/LK ThinkNote/08_课程网站`
+- 网站工程：`/Users/maxlee/Documents/LK ThinkNote/08_课程网站/06_网站工程`
+
+> 2026-07-01，网站工程已从独立目录迁入 Obsidian。原仓库完整 `main` 分支历史保存在 `00_历史与备份/course-website-main-2026-07-01.bundle`。
 
 ## 常用命令
 

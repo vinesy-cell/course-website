@@ -8,3 +8,4 @@ dist/
 .publish.log
 .last-sync.json
 tmp/
+00_历史与备份/
