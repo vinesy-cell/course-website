@@ -58,7 +58,7 @@ if (stickers.length > 10 || new Set(stickers).size !== stickers.length) {
 const requiredPracticeTitles = [
   "同时理解五种业务语言",
   "从管理者回到真实问题现场",
-  "用三步把 AI 放进业务",
+  "用四步把 AI 放进业务",
   "AI 赋能产业招商",
   "AI 赋能园区运营",
   "AI 赋能产业研究",
