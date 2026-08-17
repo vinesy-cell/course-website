@@ -288,15 +288,15 @@ function renderInsights(data) {
       ${data.insights
         .map(
           (item) => `
-            <a class="insight-card" href="${escapeHtml(item.url)}" target="_blank" rel="noopener">
+            ${item.url ? `<a class="insight-card" href="${escapeHtml(item.url)}" target="_blank" rel="noopener">` : `<article class="insight-card">`}
               <div class="insight-meta">
                 <span class="insight-tag insight-tag--${escapeHtml(item.color)}">${escapeHtml(item.category)}</span>
                 <span class="insight-date">${escapeHtml(item.date)}</span>
               </div>
               <h3>${escapeHtml(item.title)}</h3>
               ${item.excerpt ? `<p>${escapeHtml(item.excerpt)}</p>` : ""}
-              <span class="insight-read">阅读全文 →</span>
-            </a>
+              <span class="insight-read">${item.url ? "阅读全文 →" : "已发布归档 · 公众号查看"}</span>
+            ${item.url ? "</a>" : "</article>"}
           `,
         )
         .join("")}

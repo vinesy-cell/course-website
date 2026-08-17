@@ -34,7 +34,7 @@ if (data.meta?.sourceRoot || serialized.includes("/Users/")) {
   process.exit(1);
 }
 
-if ((data.insights || []).some((item) => !/^https?:\/\//.test(item.url || ""))) {
+if ((data.insights || []).some((item) => item.url && !/^https?:\/\//.test(item.url))) {
   console.error("思想与洞察中存在无效公开链接");
   process.exit(1);
 }

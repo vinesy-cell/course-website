@@ -35,42 +35,44 @@ async function rebuild(reason = "内容变化") {
 }
 
 export function startWatcher() {
-  appendLog(`开始监听内容源：${config.contentRoot}`);
-  const projectRelativeRoot = path.relative(config.contentRoot, projectRoot);
-  const watcher = fs.watch(
+  const watchRoots = [
     config.contentRoot,
-    { recursive: true },
-    (_eventType, fileName) => {
+    config.stickerSourceRoot,
+    config.articleArchiveRoot,
+  ].filter((root, index, roots) => root && roots.indexOf(root) === index && fs.existsSync(root));
+  watchRoots.forEach((root) => appendLog(`开始监听内容源：${root}`));
+
+  const watchers = watchRoots.map((root) =>
+    fs.watch(root, { recursive: true }, (_eventType, fileName) => {
       if (!fileName || String(fileName).includes(".DS_Store")) return;
       const changedName = String(fileName);
       // macOS 可能把监听根目录本身作为事件名返回，这不是内容文件变化。
-      if (changedName === path.basename(config.contentRoot)) return;
-      const changedPath = path.resolve(config.contentRoot, changedName);
+      if (changedName === path.basename(root)) return;
+      const changedPath = path.resolve(root, changedName);
       if (fs.existsSync(changedPath) && fs.statSync(changedPath).isDirectory()) {
         return;
       }
-      const changedRelativeToProject = path.relative(projectRoot, changedPath);
-      // 网站工程会生成 .last-sync、public 和 dist 等文件；这些不属于内容源，
-      // 必须排除，否则机器人会因自己的构建结果反复触发同步。
-      if (
-        projectRelativeRoot &&
-        (changedName === projectRelativeRoot ||
-          changedName.startsWith(`${projectRelativeRoot}${path.sep}`))
-      ) {
-        return;
+
+      // 网站工程会生成 .last-sync、public 和 dist 等文件；这些不属于内容源。
+      if (root === config.contentRoot) {
+        const changedRelativeToProject = path.relative(projectRoot, changedPath);
+        if (
+          changedRelativeToProject === "" ||
+          (!changedRelativeToProject.startsWith("..") &&
+            !path.isAbsolute(changedRelativeToProject))
+        ) {
+          return;
+        }
       }
-      if (
-        changedRelativeToProject === "" ||
-        (!changedRelativeToProject.startsWith("..") &&
-          !path.isAbsolute(changedRelativeToProject))
-      ) {
-        return;
-      }
+
       clearTimeout(timer);
-      timer = setTimeout(() => rebuild(`内容变化：${changedName}`), 900);
-    },
+      timer = setTimeout(
+        () => rebuild(`内容变化：${path.relative(config.contentRoot, changedPath) || changedName}`),
+        900,
+      );
+    }),
   );
-  return watcher;
+  return watchers;
 }
 
 if (fileURLToPath(import.meta.url) === path.resolve(process.argv[1] || "")) {

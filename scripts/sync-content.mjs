@@ -32,6 +32,7 @@ const optionalFiles = {
   articles: source("01_网站资料清单", "04_公众号文章精选.md"),
   catalog: source("02_网站结构与文案", "04_课程分类与目录.md"),
 };
+const articleArchiveRoot = config.articleArchiveRoot;
 
 for (const [name, filePath] of Object.entries(requiredFiles)) {
   if (!fs.existsSync(filePath)) {
@@ -178,18 +179,78 @@ if (fs.existsSync(optionalFiles.catalog)) {
   }
 }
 
-// 公众号文章（可选文件，缺失不报错）
-const CATEGORY_COLORS = { "产业园区": "blue", "AI落地": "brass", "产业研究": "muted" };
-let insights = [];
-if (fs.existsSync(optionalFiles.articles)) {
+// 公众号文章：以“已发布归档/单篇文章”为主，避免只依赖手工精选表。
+// 没有公开链接的已发布文章仍可展示，但不会伪造外链。
+const CATEGORY_COLORS = {
+  "产业园区": "blue",
+  "产业园下半场": "blue",
+  "AI落地": "brass",
+  "AI 进产业": "brass",
+  "产业研究": "muted",
+  "城市产业笔记": "muted",
+};
+const CATEGORY_NAMES = {
+  "产业园下半场": "产业园区",
+  "AI 进产业": "AI落地",
+  "城市产业笔记": "产业研究",
+};
+
+function articleFiles(root) {
+  if (!root || !fs.existsSync(root)) return [];
+  return fs
+    .readdirSync(root, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && entry.name !== "90_暂不主推内容")
+    .flatMap((entry) =>
+      fs
+        .readdirSync(path.join(root, entry.name), { withFileTypes: true })
+        .filter((file) => file.isFile() && file.name.endsWith(".md"))
+        .map((file) => ({ category: entry.name, filePath: path.join(root, entry.name, file.name) })),
+    );
+}
+
+function firstMeta(markdown, label) {
+  const match = markdown.match(new RegExp(`^-\\s*${label}[：:]\\s*(.+)$`, "m"));
+  return cleanInline(match?.[1] || "");
+}
+
+function articleSubtitle(markdown) {
+  const match = markdown.match(/^##\s+副标题\s*\n+([\s\S]*?)(?=^##\s|\s*$)/m);
+  return cleanInline((match?.[1] || "").split("\n").filter(Boolean)[0] || "");
+}
+
+function archiveInsights() {
+  return articleFiles(articleArchiveRoot)
+    .map(({ category, filePath }) => {
+      const fileName = path.basename(filePath, ".md");
+      const date = fileName.match(/^(\d{4}-\d{2}-\d{2})\s+/)?.[1] || "";
+      const title = cleanInline(fileName.replace(/^\d{4}-\d{2}-\d{2}\s+/, ""));
+      const markdown = fs.readFileSync(filePath, "utf8");
+      const rawCategory = firstMeta(markdown, "栏目") || category;
+      const url = markdown.match(/^-\s*原文链接[：:]\s*(https?:\/\/\S+)/m)?.[1] || "";
+      return {
+        title,
+        url,
+        category: CATEGORY_NAMES[rawCategory] || rawCategory,
+        color: CATEGORY_COLORS[rawCategory] || CATEGORY_COLORS[CATEGORY_NAMES[rawCategory]] || "muted",
+        date,
+        excerpt: firstMeta(markdown, "一句话判断") || articleSubtitle(markdown),
+      };
+    })
+    .filter((item) => item.title && item.date && CATEGORY_COLORS[item.category])
+    .sort((a, b) => b.date.localeCompare(a.date) || b.title.localeCompare(a.title, "zh-CN"))
+    .slice(0, 6);
+}
+
+let insights = archiveInsights();
+if (insights.length === 0 && fs.existsSync(optionalFiles.articles)) {
   const articlesDoc = readDocument(optionalFiles.articles);
   const allRows = table(articlesDoc.lines || articlesDoc);
   insights = allRows
-    .filter((row) => /^https?:\/\//.test(row["链接"]?.trim() || ""))
+    .filter((row) => row["标题"] && row["日期"])
     .slice(0, 6)
     .map((row) => ({
       title: cleanInline(row["标题"] || ""),
-      url: row["链接"].trim(),
+      url: /^https?:\/\//.test(row["链接"]?.trim() || "") ? row["链接"].trim() : "",
       category: cleanInline(row["分类"] || ""),
       color: CATEGORY_COLORS[row["分类"]?.trim()] || "muted",
       date: cleanInline(row["日期"] || ""),
@@ -210,22 +271,36 @@ const assets = {
   siteLogo: "李凯思考笔记logo.png",
 };
 
-// 公众号贴图：按更新时间取最近 10 张；内容相同的文件只保留一份。
+// 公众号贴图：从内容运营库递归读取最近 10 张，排除未来排期和重复图片。
 const STICKER_EXTS = new Set([".jpg", ".jpeg", ".png", ".gif", ".webp"]);
-const stickersDir = source("05_视觉素材", "公众号贴图");
-const stickerFiles = fs.existsSync(stickersDir)
-  ? fs.readdirSync(stickersDir)
-      .filter((f) => STICKER_EXTS.has(path.extname(f).toLowerCase()))
-      .map((file) => ({
-        file,
-        mtimeMs: fs.statSync(path.join(stickersDir, file)).mtimeMs,
-        hash: crypto.createHash("sha256").update(fs.readFileSync(path.join(stickersDir, file))).digest("hex"),
-      }))
-      .sort((a, b) => b.mtimeMs - a.mtimeMs || b.file.localeCompare(a.file, "zh-CN", { numeric: true }))
-      .filter((item, index, items) => items.findIndex((candidate) => candidate.hash === item.hash) === index)
-      .slice(0, 10)
-      .map((item) => item.file)
-  : [];
+const stickersDir = config.stickerSourceRoot;
+const today = new Date().toISOString().slice(0, 10);
+const walkFiles = (root) => {
+  if (!root || !fs.existsSync(root)) return [];
+  return fs.readdirSync(root, { withFileTypes: true }).flatMap((entry) => {
+    const fullPath = path.join(root, entry.name);
+    return entry.isDirectory() ? walkFiles(fullPath) : [fullPath];
+  });
+};
+const stickerEntries = walkFiles(stickersDir)
+  .filter((filePath) => path.basename(filePath) === "贴图.png" && STICKER_EXTS.has(path.extname(filePath).toLowerCase()))
+  .map((sourcePath) => {
+    const sourceName = path.basename(path.dirname(sourcePath));
+    const date = sourceName.match(/^(\d{4}-\d{2}-\d{2})_/)?.[1] || "";
+    const fileName = `${sourceName}${path.extname(sourcePath).toLowerCase()}`;
+    return {
+      sourcePath,
+      fileName,
+      date,
+      mtimeMs: fs.statSync(sourcePath).mtimeMs,
+      hash: crypto.createHash("sha256").update(fs.readFileSync(sourcePath)).digest("hex"),
+    };
+  })
+  .filter((item) => item.date && item.date <= today)
+  .sort((a, b) => b.date.localeCompare(a.date) || b.mtimeMs - a.mtimeMs || b.fileName.localeCompare(a.fileName, "zh-CN"))
+  .filter((item, index, items) => items.findIndex((candidate) => candidate.hash === item.hash) === index)
+  .slice(0, 10);
+const stickerFiles = stickerEntries.map((item) => item.fileName);
 
 const siteData = {
   meta: {
@@ -312,8 +387,8 @@ for (const existing of fs.readdirSync(stickersOut)) {
   if (!stickerFiles.includes(existing)) fs.rmSync(path.join(stickersOut, existing));
 }
 if (stickerFiles.length > 0) {
-  for (const f of stickerFiles) {
-    fs.copyFileSync(path.join(stickersDir, f), path.join(stickersOut, f));
+  for (const item of stickerEntries) {
+    fs.copyFileSync(item.sourcePath, path.join(stickersOut, item.fileName));
   }
   console.log(`贴图已复制：${stickerFiles.length} 张`);
 }
