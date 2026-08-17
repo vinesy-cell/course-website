@@ -207,6 +207,7 @@ const assets = {
   wechatQr: "微信二维码_李凯_IMG_9523.JPG",
   accountQr: "公众号二维码_李凯思考笔记_IMG_9524.JPG",
   coursePoster: "李凯_个人主视觉.png",
+  siteLogo: "李凯思考笔记logo.png",
 };
 
 // 公众号贴图：按更新时间取最近 10 张；内容相同的文件只保留一份。

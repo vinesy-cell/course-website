@@ -4,6 +4,7 @@ import path from "node:path";
 import { projectRoot } from "./config.mjs";
 
 export const logFile = path.join(projectRoot, ".robot.log");
+const LOG_TAIL_BYTES = 256 * 1024;
 
 export function appendLog(message) {
   const line = `[${new Date().toLocaleString("zh-CN")}] ${message}\n`;
@@ -12,12 +13,23 @@ export function appendLog(message) {
 
 export function readLog(lines = 120) {
   if (!fs.existsSync(logFile)) return "";
-  return fs
-    .readFileSync(logFile, "utf8")
-    .trim()
+  const { size } = fs.statSync(logFile);
+  const start = Math.max(0, size - LOG_TAIL_BYTES);
+  const length = size - start;
+  const fd = fs.openSync(logFile, "r");
+  const buffer = Buffer.alloc(length);
+  try {
+    fs.readSync(fd, buffer, 0, length, start);
+  } finally {
+    fs.closeSync(fd);
+  }
+  const text = buffer.toString("utf8");
+  return text
     .split("\n")
+    .slice(start > 0 ? 1 : 0)
     .slice(-lines)
-    .join("\n");
+    .join("\n")
+    .trim();
 }
 
 export function run(command, args = [], options = {}) {

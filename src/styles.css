@@ -97,15 +97,12 @@ img {
 }
 
 .brand-mark {
-  display: grid;
-  width: 36px;
-  height: 36px;
-  place-items: center;
-  color: white;
-  background: var(--blue-dark);
-  font-family: Georgia, serif;
-  font-size: var(--text-md);
-  letter-spacing: 0;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border: 1px solid var(--line);
+  object-fit: cover;
+  object-position: center;
 }
 
 .site-nav {
@@ -1209,6 +1206,7 @@ img {
   .brand-mark {
     width: 32px;
     height: 32px;
+    flex-basis: 32px;
   }
 
   .site-nav {

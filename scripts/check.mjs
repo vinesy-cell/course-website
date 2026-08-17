@@ -13,6 +13,7 @@ const required = [
   "dist/assets/微信二维码_李凯_IMG_9523.JPG",
   "dist/assets/公众号二维码_李凯思考笔记_IMG_9524.JPG",
   "dist/assets/李凯_个人主视觉.png",
+  "dist/assets/李凯思考笔记logo.png",
   "dist/assets/logos/zju-official.png",
   "dist/assets/logos/linping-innovation-alliance.png",
 ];
