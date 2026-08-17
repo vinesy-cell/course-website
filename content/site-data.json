@@ -3,7 +3,7 @@
     "siteName": "李凯思考笔记",
     "title": "AI进入企业和园区业务现场的实战课程与工作坊",
     "description": "不是再学一个 AI 工具，也不是追逐工具测评，而是把 AI 放进企业经营、团队协同、园区招商和产业服务的真实任务里，做政府园区与企业之间的智能翻译器，形成可落地、可复用、能持续创造成果的组织能力。",
-    "syncedAt": "2026-08-17T13:24:36.269Z",
+    "syncedAt": "2026-08-17T13:47:00.576Z",
     "publicPrices": true
   },
   "navigation": [
@@ -397,8 +397,8 @@
   ],
   "insights": [
     {
-      "title": "企业做AI，为什么“场景越多”反而越难落地？",
-      "url": "",
+      "title": "AI进产业，第一步不是找场景，而是把问题分成三种工作",
+      "url": "https://mp.weixin.qq.com/s/Ihi6bRH-mFkUj15CfeidFQ",
       "category": "AI落地",
       "color": "brass",
       "date": "2026-08-14",
@@ -406,7 +406,7 @@
     },
     {
       "title": "园区服务不能平均用力：先把企业需求分成三种事",
-      "url": "",
+      "url": "https://mp.weixin.qq.com/s/Ozp-zwLpcI-gjBbV8Lmzcg",
       "category": "产业园区",
       "color": "blue",
       "date": "2026-08-12",
@@ -414,7 +414,7 @@
     },
     {
       "title": "城市补产业链，最怕把每个缺口都变成一个招商任务",
-      "url": "",
+      "url": "https://mp.weixin.qq.com/s/B1aghNpg8EKs2r-Rk5N24g",
       "category": "产业研究",
       "color": "muted",
       "date": "2026-08-10",
@@ -422,23 +422,23 @@
     },
     {
       "title": "企业用AI做客户经营，最有价值的不是多发消息，而是让下一步不断档",
-      "url": "",
+      "url": "https://mp.weixin.qq.com/s/mK_1kpPECbQieHXmHBLNtw",
       "category": "AI落地",
       "color": "brass",
       "date": "2026-08-07",
       "excerpt": "AI 在客户经营中最实用的价值，不是批量生成更多消息，而是帮助团队记住上下文、明确下一步、发现跟进断点，并把结果带回客户记录。"
     },
     {
-      "title": "园区留住企业，最难的不是把服务做多，而是持续理解它的下一步",
-      "url": "",
+      "title": "园区服务真正要管住的，不是工单数量，而是问题何时该升级",
+      "url": "https://mp.weixin.qq.com/s/Iir0NWZFC4jpb2Je-86B_w",
       "category": "产业园区",
       "color": "blue",
       "date": "2026-08-05",
-      "excerpt": "园区客户成功不是替企业解决所有问题，而是在企业不同成长阶段持续看见它的下一步，并把外部资源变成可调用的支持。"
+      "excerpt": "园区不需要包办企业的所有问题，但必须用清楚的升级规则，把普通服务、跨部门协同和关键经营问题送到不同的处理路径上。"
     },
     {
-      "title": "城市招商真正成功的标志，不是企业来了，而是下一次扩张还选这里",
-      "url": "",
+      "title": "企业愿意把下一次扩张放在哪里，就是对城市最真实的投票",
+      "url": "https://mp.weixin.qq.com/s/uVbOVy94yovjxNqL8PIvxw",
       "category": "产业研究",
       "color": "muted",
       "date": "2026-08-03",

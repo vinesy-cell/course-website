@@ -180,7 +180,8 @@ if (fs.existsSync(optionalFiles.catalog)) {
 }
 
 // 公众号文章：以“已发布归档/单篇文章”为主，避免只依赖手工精选表。
-// 没有公开链接的已发布文章仍可展示，但不会伪造外链。
+// 第七单元只展示已经核验过「发表日期 + 公众号原文链接」的文章：
+// 计划稿即使被暂存于归档目录，也不能混入可点击的公开文章列表。
 const CATEGORY_COLORS = {
   "产业园区": "blue",
   "产业园下半场": "blue",
@@ -222,11 +223,13 @@ function archiveInsights() {
   return articleFiles(articleArchiveRoot)
     .map(({ category, filePath }) => {
       const fileName = path.basename(filePath, ".md");
-      const date = fileName.match(/^(\d{4}-\d{2}-\d{2})\s+/)?.[1] || "";
-      const title = cleanInline(fileName.replace(/^\d{4}-\d{2}-\d{2}\s+/, ""));
       const markdown = fs.readFileSync(filePath, "utf8");
       const rawCategory = firstMeta(markdown, "栏目") || category;
       const url = markdown.match(/^-\s*原文链接[：:]\s*(https?:\/\/\S+)/m)?.[1] || "";
+      const date = firstMeta(markdown, "发表日期");
+      const title =
+        firstMeta(markdown, "页面显示标题") ||
+        cleanInline(fileName.replace(/^\d{4}-\d{2}-\d{2}\s+/, ""));
       return {
         title,
         url,
@@ -236,7 +239,13 @@ function archiveInsights() {
         excerpt: firstMeta(markdown, "一句话判断") || articleSubtitle(markdown),
       };
     })
-    .filter((item) => item.title && item.date && CATEGORY_COLORS[item.category])
+    .filter(
+      (item) =>
+        item.title &&
+        /^\d{4}-\d{2}-\d{2}$/.test(item.date) &&
+        /^https?:\/\//.test(item.url) &&
+        CATEGORY_COLORS[item.category],
+    )
     .sort((a, b) => b.date.localeCompare(a.date) || b.title.localeCompare(a.title, "zh-CN"))
     .slice(0, 6);
 }
