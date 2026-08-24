@@ -287,6 +287,7 @@ const today = new Date().toISOString().slice(0, 10);
 const walkFiles = (root) => {
   if (!root || !fs.existsSync(root)) return [];
   return fs.readdirSync(root, { withFileTypes: true }).flatMap((entry) => {
+    if (entry.isDirectory() && entry.name === "_history") return [];
     const fullPath = path.join(root, entry.name);
     return entry.isDirectory() ? walkFiles(fullPath) : [fullPath];
   });
@@ -307,6 +308,7 @@ const stickerEntries = walkFiles(stickersDir)
   })
   .filter((item) => item.date && item.date <= today)
   .sort((a, b) => b.date.localeCompare(a.date) || b.mtimeMs - a.mtimeMs || b.fileName.localeCompare(a.fileName, "zh-CN"))
+  .filter((item, index, items) => items.findIndex((candidate) => candidate.fileName === item.fileName) === index)
   .filter((item, index, items) => items.findIndex((candidate) => candidate.hash === item.hash) === index)
   .slice(0, 10);
 const stickerFiles = stickerEntries.map((item) => item.fileName);
