@@ -15,6 +15,7 @@
     "workbench:password:remove": "node scripts/workbench-password.mjs remove",
     "workbench:sync": "node scripts/sync-workbench.mjs",
     "workbench:dry-run": "node scripts/sync-workbench.mjs --dry-run",
+    "workbench:publish": "node scripts/publish-workbench.mjs",
     "robot:install": "node scripts/install-launch-agent.mjs",
     "robot:uninstall": "node scripts/uninstall-launch-agent.mjs",
     "watch": "node scripts/watch.mjs",

@@ -34,12 +34,16 @@ function readPassword() {
 }
 
 function parseWorkbenchData(text) {
-  // The source file contains the primary object assignment followed by a
-  // small JavaScript expression that derives `portfolio`. Capture only the
-  // JSON-compatible object, rather than the whole script.
-  const match = text.match(
+  // Earlier snapshots derived `portfolio` after the primary object. Current
+  // snapshots serialize the complete JSON object directly. Keep both forms
+  // readable so a local refresh always has one matching mobile-sync path.
+  const legacyMatch = text.match(
     /window\.PROJECT_WORKBENCH_DATA\s*=\s*([\s\S]*?);\s*window\.PROJECT_WORKBENCH_DATA\.portfolio\s*=/,
   );
+  const directMatch = text.match(
+    /window\.PROJECT_WORKBENCH_DATA\s*=\s*([\s\S]*?);\s*$/,
+  );
+  const match = legacyMatch || directMatch;
   if (!match) {
     throw new Error("无法从 project-workbench-data.js 读取工作台数据。");
   }
