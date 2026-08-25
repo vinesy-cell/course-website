@@ -71,8 +71,8 @@ if (command === "check") {
   }
 } else if (command === "set") {
   const password = await readSecret("设置工作台登录密码（不会显示）：");
-  if (password.length < 12) {
-    throw new Error("密码至少需要 12 位。");
+  if (password.length < 8) {
+    throw new Error("密码至少需要 8 位。");
   }
   runSecurity([
     "add-generic-password",
@@ -96,4 +96,3 @@ if (command === "check") {
   console.error("用法：node scripts/workbench-password.mjs [check|set|remove]");
   process.exitCode = 2;
 }
-

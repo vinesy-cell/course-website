@@ -90,7 +90,7 @@
       "<p>这是只读查看入口。请输入工作台密码，查看 Mac mini 最近同步的项目状态快照。</p>",
       '<form autocomplete="off">',
       '<label for="workbench-password">登录密码</label>',
-      '<input id="workbench-password" type="password" minlength="12" required autofocus>',
+      '<input id="workbench-password" type="password" minlength="8" required autofocus>',
       '<p class="auth-error" role="alert"></p>',
       '<button type="submit">进入工作台</button>',
       "</form>",
@@ -129,4 +129,3 @@
 
   document.addEventListener("DOMContentLoaded", mount);
 }());
-
