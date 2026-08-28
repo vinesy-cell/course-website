@@ -6,7 +6,10 @@ import { fileURLToPath } from "node:url";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, "..");
-const vaultRoot = "/Users/maxlee/Documents/MAXNOTE";
+const legacyVaultRoot = "/Users/maxlee/Documents/MAXNOTE";
+const derivedVaultRoot = path.resolve(scriptDir, "../../../..");
+// 兼容迁移前（maxlee）与迁移后（当前用户名）两种机器：优先旧路径，不存在则按脚本位置推导。
+const vaultRoot = fs.existsSync(legacyVaultRoot) ? legacyVaultRoot : derivedVaultRoot;
 const workbenchRoot = path.join(vaultRoot, "02_项目办公室/00_项目工作台");
 const sourceHtml = path.join(workbenchRoot, "index.html");
 const sourceData = path.join(workbenchRoot, "project-workbench-data.js");
