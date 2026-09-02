@@ -3,878 +3,1021 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>李凯项目办公室工作台</title>
+  <title>李凯项目工作台</title>
   <link rel="icon" href="assets/李凯思考笔记logo.png">
   <style>
+    /* ═══════════════════════════════════════════════════════════
+       Apple 设计系统
+    ═══════════════════════════════════════════════════════════ */
+
     :root {
-      --ink: #1d1d1f;
-      --muted: #6e6e73;
-      --line: #e5e5ea;
-      --paper: #f5f5f7;
-      --surface: #ffffff;
-      --deep: #1d1d1f;
-      --teal: #0071e3;
-      --sky: #30a14e;
-      --gold: #c77400;
-      --coral: #d70015;
-      --soft-teal: #e8f2ff;
-      --soft-sky: #e8f5e9;
-      --soft-gold: #fff4df;
-      --soft-coral: #fff0ee;
-      --radius: 8px;
-      --shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+      /* Colors */
+      --bg-primary: #FBFBFD;
+      --bg-secondary: #F5F5F7;
+      --bg-tertiary: #FFFFFF;
+      --bg-elevated: #FFFFFF;
+
+      --text-primary: #1D1D1F;
+      --text-secondary: #6E6E73;
+      --text-tertiary: #86868B;
+
+      --accent: #0071E3;
+      --accent-hover: #0077ED;
+      --accent-pressed: #006EDB;
+
+      --success: #34C759;
+      --warning: #FF9500;
+      --danger: #FF3B30;
+      --info: #5AC8FA;
+      --purple: #AF52DE;
+
+      --divider: rgba(0, 0, 0, 0.08);
+      --divider-strong: rgba(0, 0, 0, 0.12);
+
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+
+      /* Radius */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-2xl: 24px;
+
+      /* Typography */
+      --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "PingFang SC", sans-serif;
+
+      /* Spacing */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-      line-height: 1.5;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-system);
+      font-size: 17px;
+      line-height: 1.47;
       -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    a { color: inherit; text-decoration: none; }
+    /* ═══════════════════════════════════════════════════════════
+       Layout
+    ═══════════════════════════════════════════════════════════ */
 
-    .shell {
-      max-width: 1220px;
+    .container {
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 28px 24px 56px;
+      padding: var(--space-10) var(--space-6) var(--space-16);
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       Masthead
+    ═══════════════════════════════════════════════════════════ */
 
     .masthead {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 24px;
-      align-items: end;
-      padding: 30px 30px 28px;
-      background: var(--deep);
-      color: #f5f5f7;
-      border-radius: var(--radius);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-      isolation: isolate;
-      overflow: hidden;
+      background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-12);
+      margin-bottom: var(--space-8);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--divider);
       position: relative;
+      overflow: hidden;
     }
 
-    .masthead::after {
+    .masthead::before {
+      content: '';
       position: absolute;
-      z-index: 0;
-      inset: 0;
-      content: "";
-      background-image: url("assets/project-header-art.png");
-      background-position: right center;
-      background-repeat: no-repeat;
-      background-size: auto 230%;
-      opacity: 0.52;
+      top: 0;
+      right: 0;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0, 113, 227, 0.05) 0%, transparent 70%);
       pointer-events: none;
     }
 
-    .masthead > * {
+    .masthead-inner {
       position: relative;
       z-index: 1;
     }
 
-    .brand {
+    .masthead-header {
       display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .brand-mark {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      background: #ffffff;
-      padding: 8px;
-      object-fit: contain;
-    }
-
-    .eyebrow {
-      margin: 0 0 4px;
-      font-size: 12px;
-      color: #a1a1a6;
-      letter-spacing: 0.08em;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 28px;
-      font-weight: 600;
-      letter-spacing: 0;
-    }
-
-    .subtitle {
-      margin: 6px 0 0;
-      font-size: 14px;
-      color: #d2d2d7;
-    }
-
-    .date-stamp {
-      font-size: 13px;
-      color: #a1a1a6;
-      text-align: right;
-    }
-
-    .date-stamp strong {
-      display: block;
-      color: #ffffff;
-      font-size: 17px;
-      font-weight: 600;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin: 18px 0;
-    }
-
-    .stat {
-      min-height: 104px;
-      padding: 18px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .stat-value {
-      margin-top: 11px;
-      font-size: 30px;
-      font-weight: 600;
-      line-height: 1;
-    }
-
-    .stat-note {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .stat-value.teal { color: var(--teal); }
-    .stat-value.sky { color: var(--sky); }
-    .stat-value.gold { color: var(--gold); }
-    .stat-value.coral { color: var(--coral); }
-
-    .tabs {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 3px;
-      margin: 26px 0 18px;
-      padding: 3px;
-      background: #e9e9ed;
-      border: 1px solid #dedee3;
-      border-radius: 8px;
-    }
-
-    .tab {
-      appearance: none;
-      border: 1px solid transparent;
-      border-radius: 6px;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      font: inherit;
-      font-size: 14px;
-      padding: 9px 12px;
-      transition: background-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
-    }
-
-    .tab[aria-selected="true"] {
-      color: var(--ink);
-      background: var(--surface);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
-      font-weight: 600;
-    }
-
-    .tab:hover { color: var(--ink); }
-    .tab:focus-visible,
-    .open-link:focus-visible {
-      outline: 3px solid rgba(0, 113, 227, 0.28);
-      outline-offset: 2px;
-    }
-
-    .view { display: none; }
-    .view.active { display: block; }
-
-    .split {
-      display: grid;
-      grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
-      gap: 16px;
-    }
-
-    .section-title {
-      display: flex;
-      align-items: baseline;
       justify-content: space-between;
-      gap: 12px;
-      margin: 0 0 11px;
-      font-size: 16px;
-      font-weight: 600;
+      align-items: flex-start;
+      margin-bottom: var(--space-10);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--divider);
     }
 
-    .section-title small {
-      color: var(--muted);
-      font-size: 12px;
+    .masthead-title {
+      flex: 1;
+    }
+
+    .masthead-title h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: var(--space-2);
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .masthead-subtitle {
+      font-size: 17px;
+      color: var(--text-secondary);
       font-weight: 400;
     }
 
-    .focus-list {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    .masthead-meta {
+      text-align: right;
+      padding: var(--space-4);
+      background: rgba(0, 113, 227, 0.06);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(10px);
+    }
+
+    .masthead-meta-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-tertiary);
+      font-weight: 600;
+      margin-bottom: var(--space-1);
+    }
+
+    .masthead-meta-value {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--space-5);
+    }
+
+    .stat-card {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      border: 1px solid var(--divider);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
       overflow: hidden;
     }
 
-    .focus-item {
-      display: grid;
-      grid-template-columns: 94px minmax(0, 1fr) auto;
-      gap: 14px;
-      align-items: center;
-      padding: 15px 14px;
-      border-bottom: 1px solid var(--line);
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--stat-color) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
-    .focus-item:last-child { border-bottom: 0; }
-    .focus-time { color: var(--coral); font-size: 12px; font-weight: 600; }
-    .focus-copy b { display: block; font-size: 14px; font-weight: 600; }
-    .focus-copy span { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--stat-color);
+    }
 
-    .open-link {
-      color: var(--teal);
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+
+    .stat-card.accent { --stat-color: var(--accent); }
+    .stat-card.warning { --stat-color: var(--warning); }
+    .stat-card.info { --stat-color: var(--info); }
+    .stat-card.success { --stat-color: var(--success); }
+
+    .stat-label {
       font-size: 13px;
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-tertiary);
+      margin-bottom: var(--space-3);
+    }
+
+    .stat-value {
+      font-size: 44px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: var(--space-2);
+      font-variant-numeric: tabular-nums;
+      color: var(--stat-color);
+    }
+
+    .stat-note {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Navigation Tabs
+    ═══════════════════════════════════════════════════════════ */
+
+    .nav-tabs {
+      display: flex;
+      gap: var(--space-2);
+      margin-bottom: var(--space-8);
+      padding: var(--space-2);
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--divider);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-tab {
+      flex: 1;
+      min-width: max-content;
+      padding: var(--space-3) var(--space-5);
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-family: var(--font-system);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
       white-space: nowrap;
     }
 
-    .open-link::after { content: " ->"; }
-
-    .signal-panel {
-      padding: 18px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    .nav-tab:hover {
+      color: var(--text-primary);
+      background: var(--bg-secondary);
     }
 
-    .signal {
+    .nav-tab.active {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Views
+    ═══════════════════════════════════════════════════════════ */
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Cards
+    ═══════════════════════════════════════════════════════════ */
+
+    .grid {
       display: grid;
-      grid-template-columns: 9px minmax(0, 1fr);
-      gap: 10px;
-      align-items: start;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--line);
+      gap: var(--space-6);
     }
 
-    .signal:last-child { border-bottom: 0; padding-bottom: 0; }
-    .signal-dot { width: 9px; height: 9px; border-radius: 50%; margin-top: 5px; }
-    .signal-dot.teal { background: var(--teal); }
-    .signal-dot.gold { background: var(--gold); }
-    .signal-dot.coral { background: var(--coral); }
-    .signal b { display: block; font-size: 13px; font-weight: 600; }
-    .signal span { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; }
-
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+    .card {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--divider);
+      transition: all 0.3s ease;
     }
 
-    .project-card {
-      display: grid;
-      grid-template-columns: 38px minmax(0, 1fr);
-      gap: 12px;
-      min-height: 160px;
-      padding: 16px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      transition: transform 160ms ease, box-shadow 160ms ease;
+    .card:hover {
+      box-shadow: var(--shadow-lg);
     }
 
-    .project-card:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-
-    .project-number {
+    .card-header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
-      color: var(--deep);
-      background: var(--soft-teal);
-      font-size: 13px;
-      font-weight: 700;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-5);
+      border-bottom: 1px solid var(--divider);
     }
 
-    .project-card.sky .project-number { color: var(--sky); background: var(--soft-sky); }
-    .project-card.gold .project-number { color: var(--gold); background: var(--soft-gold); }
-    .project-card.coral .project-number { color: var(--coral); background: var(--soft-coral); }
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
 
-    .project-top {
+    .card-title h2 {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Badges
+    ═══════════════════════════════════════════════════════════ */
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-3);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .badge.priority {
+      background: linear-gradient(135deg, #FFE5E5 0%, #FFD1D1 100%);
+      color: var(--danger);
+    }
+
+    .badge.warning {
+      background: linear-gradient(135deg, #FFF4E5 0%, #FFE8CC 100%);
+      color: var(--warning);
+    }
+
+    .badge.info {
+      background: linear-gradient(135deg, #E5F4FF 0%, #D1EBFF 100%);
+      color: var(--info);
+    }
+
+    .badge.success {
+      background: linear-gradient(135deg, #E8F8ED 0%, #D4F2DC 100%);
+      color: var(--success);
+    }
+
+    .badge.accent {
+      background: linear-gradient(135deg, #E5F2FF 0%, #D1E9FF 100%);
+      color: var(--accent);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Manager Cards
+    ═══════════════════════════════════════════════════════════ */
+
+    .manager-card {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--divider);
+      transition: all 0.3s ease;
+    }
+
+    .manager-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .manager-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-5);
+      border-bottom: 2px solid var(--divider);
+    }
+
+    .manager-name {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .manager-status {
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+      border-radius: var(--radius-md);
+      padding: var(--space-4) var(--space-5);
+      border: 1px solid var(--divider);
+      margin-bottom: var(--space-6);
+    }
+
+    .manager-status-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      font-weight: 700;
+      margin-bottom: var(--space-1);
+    }
+
+    .manager-status-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      font-weight: 700;
+      margin: var(--space-6) 0 var(--space-4);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Project Items
+    ═══════════════════════════════════════════════════════════ */
+
+    .project-item {
+      padding: var(--space-5) 0;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .project-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .project-header {
       display: flex;
       align-items: flex-start;
-      gap: 8px;
       justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-3);
     }
 
-    .project-top h3 { margin: 0; font-size: 15px; font-weight: 600; }
-
-    .status {
-      flex: 0 0 auto;
-      border-radius: 5px;
-      padding: 3px 7px;
-      font-size: 11px;
+    .project-title {
+      flex: 1;
+      font-size: 16px;
       font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.5;
     }
 
-    .status.teal { color: var(--teal); background: var(--soft-teal); }
-    .status.sky { color: var(--sky); background: var(--soft-sky); }
-    .status.gold { color: var(--gold); background: var(--soft-gold); }
-    .status.coral { color: var(--coral); background: var(--soft-coral); }
-
-    .project-card p {
-      margin: 8px 0 12px;
-      color: var(--muted);
-      font-size: 12px;
+    .project-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: var(--space-3);
     }
 
-    .next-line {
+    .project-meta {
       display: flex;
-      align-items: baseline;
-      gap: 8px;
-      margin-top: auto;
-      font-size: 12px;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      font-size: 14px;
     }
 
-    .next-line strong { color: var(--ink); }
-    .next-line span { color: var(--muted); }
-
-    .pipeline {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--surface);
-      box-shadow: var(--shadow);
+    .project-meta-item {
+      color: var(--text-secondary);
     }
 
-    .lane {
-      min-height: 146px;
-      padding: 16px;
-      border-right: 1px solid var(--line);
-    }
-
-    .lane:last-child { border-right: 0; }
-    .lane-label { color: var(--muted); font-size: 12px; }
-    .lane-count { margin-top: 9px; font-size: 29px; font-weight: 600; }
-    .lane-note { margin-top: 7px; color: var(--muted); font-size: 12px; }
-
-    .table-wrap {
-      overflow-x: auto;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--surface);
-      box-shadow: var(--shadow);
-    }
-
-    table { width: 100%; border-collapse: collapse; min-width: 760px; }
-    .portfolio-table table { min-width: 1040px; }
-    th, td { padding: 13px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
-    tr:last-child td { border-bottom: 0; }
-    th { color: var(--muted); background: #f5f5f7; font-size: 12px; font-weight: 600; }
-    td { font-size: 13px; }
-    td strong { font-weight: 600; }
-    td .muted { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; }
-    tbody tr { transition: background-color 160ms ease; }
-    tbody tr:hover { background: #fafafa; }
-
-    .tag {
-      display: inline-block;
-      border-radius: 5px;
-      padding: 3px 8px;
-      font-size: 11px;
+    .project-meta-item strong {
+      color: var(--text-primary);
       font-weight: 600;
+      margin-right: var(--space-1);
     }
 
-    .tag.verify { color: var(--gold); background: var(--soft-gold); }
-    .tag.confirm { color: var(--coral); background: var(--soft-coral); }
-    .tag.trial { color: var(--teal); background: var(--soft-teal); }
-    .tag.review { color: var(--sky); background: var(--soft-sky); }
-    .tag.pause { color: var(--muted); background: #edf1f0; }
-
-    .project-list {
-      display: grid;
-      gap: 10px;
+    /* Task List */
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
     }
 
-    .project-row {
-      display: grid;
-      grid-template-columns: 132px minmax(0, 1.4fr) minmax(0, 1fr) auto;
-      gap: 16px;
-      align-items: center;
-      padding: 14px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    .task-item {
+      padding: var(--space-4);
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--divider);
+      transition: all 0.2s ease;
     }
 
-    .project-row b { font-size: 14px; }
-    .project-row span { color: var(--muted); font-size: 12px; }
-
-    .footnote {
-      margin: 24px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-      text-align: center;
+    .task-item:hover {
+      background: var(--bg-tertiary);
+      box-shadow: var(--shadow-sm);
+      transform: translateX(4px);
     }
 
-    @media (max-width: 820px) {
-      .masthead { grid-template-columns: 1fr; }
-      .date-stamp { text-align: left; }
-      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .split, .project-grid { grid-template-columns: 1fr; }
-      .pipeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .lane:nth-child(2) { border-right: 0; }
-      .lane:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-      .project-row { grid-template-columns: 1fr 1fr; }
+    .task-item-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: var(--space-1);
     }
 
-    @media (max-width: 540px) {
-      .shell { padding: 14px 12px 32px; }
-      .masthead { padding: 22px 18px 20px; }
-      .masthead::after {
-        background-size: auto 105%;
-        opacity: 0.3;
+    .task-item-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Manager Note */
+    .manager-note {
+      margin-top: var(--space-6);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--divider);
+    }
+
+    .manager-note-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+
+    .manager-note-content {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       Responsive
+    ═══════════════════════════════════════════════════════════ */
+
+    @media (max-width: 768px) {
+      .container {
+        padding: var(--space-6) var(--space-4) var(--space-12);
       }
-      h1 { font-size: 22px; }
-      .tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .focus-item { grid-template-columns: 72px minmax(0, 1fr); }
-      .focus-item .open-link { grid-column: 2; }
-      .project-row { grid-template-columns: 1fr; gap: 6px; }
-      .project-row .open-link { margin-top: 4px; }
+
+      .masthead {
+        padding: var(--space-8);
+      }
+
+      .masthead-header {
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+
+      .masthead-meta {
+        text-align: left;
+        width: 100%;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+      }
+
+      .project-header {
+        flex-direction: column;
+      }
+
+      .project-meta {
+        flex-direction: column;
+        gap: var(--space-2);
+      }
     }
   </style>
 </head>
 <body>
-  <main class="shell">
+  <div class="container">
+    <!-- Masthead -->
     <header class="masthead">
-      <div class="brand">
-        <img class="brand-mark" src="assets/李凯思考笔记logo.png" alt="李凯思考笔记">
-        <div>
-          <p class="eyebrow">MAXNOTE / 02 PROJECT OFFICE</p>
-          <h1>项目办公室工作台</h1>
-          <p class="subtitle">把下一步放在看得见的位置</p>
+      <div class="masthead-inner">
+        <div class="masthead-header">
+          <div class="masthead-title">
+            <h1>李凯项目工作台</h1>
+            <p class="masthead-subtitle">全局视角 · 实时状态 · 决策支持</p>
+          </div>
+          <div class="masthead-meta">
+            <div class="masthead-meta-label">数据快照</div>
+            <div class="masthead-meta-value" id="snapshot-date">2026-09-02</div>
+          </div>
         </div>
-      </div>
-      <div class="date-stamp">
-        <strong id="dashboard-date">--</strong>
-        <span id="dashboard-date-note">项目数据待刷新</span>
+
+        <div class="stats-grid">
+          <div class="stat-card accent">
+            <div class="stat-label">本周优先推进</div>
+            <div class="stat-value" id="priority-count">-</div>
+            <div class="stat-note">需要重点关注</div>
+          </div>
+          <div class="stat-card info">
+            <div class="stat-label">等待外部反馈</div>
+            <div class="stat-value" id="waiting-count">-</div>
+            <div class="stat-note">需要对方回复</div>
+          </div>
+          <div class="stat-card warning">
+            <div class="stat-label">决策判断点</div>
+            <div class="stat-value" id="decision-count">-</div>
+            <div class="stat-note">需要李凯判断</div>
+          </div>
+          <div class="stat-card success">
+            <div class="stat-label">待立项机会</div>
+            <div class="stat-value" id="opp-count">-</div>
+            <div class="stat-note">持续观察中</div>
+          </div>
+        </div>
       </div>
     </header>
 
-    <section class="stats" aria-label="项目概览">
-      <div class="stat">
-        <div class="stat-label">优先推进</div>
-        <div class="stat-value teal" id="priority-count">--</div>
-        <div class="stat-note">有明确时点或不可延后的事项</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">等待外部</div>
-        <div class="stat-value sky" id="waiting-count">--</div>
-        <div class="stat-note">等待客户、材料或内部反馈</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">待明确边界</div>
-        <div class="stat-value coral" id="decision-count">--</div>
-        <div class="stat-note">合同、责任或关键条件待收口</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">暂停 / 归档</div>
-        <div class="stat-value gold" id="paused-count">--</div>
-        <div class="stat-note">当前不占用推进资源</div>
-      </div>
-    </section>
-
-    <nav class="tabs" aria-label="工作台视图">
-      <button class="tab" type="button" data-view="operations" aria-selected="true">项目指挥</button>
-      <button class="tab" type="button" data-view="overview" aria-selected="false">项目焦点</button>
-      <button class="tab" type="button" data-view="projects" aria-selected="false">项目主线</button>
-      <button class="tab" type="button" data-view="opportunities" aria-selected="false">机会雷达</button>
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" onclick="switchTab('priority')">本周优先</button>
+      <button class="nav-tab" onclick="switchTab('managers')">负责人工作台</button>
+      <button class="nav-tab" onclick="switchTab('waiting')">等待反馈</button>
+      <button class="nav-tab" onclick="switchTab('decision')">决策节点</button>
+      <button class="nav-tab" onclick="switchTab('opportunities')">机会雷达</button>
+      <button class="nav-tab" onclick="switchTab('all')">全部项目</button>
     </nav>
 
-    <section id="operations" class="view active">
-      <div class="split">
-        <section>
-          <h2 class="section-title">优先推进 <small id="review-source">读取最新每日复盘</small></h2>
-          <div class="focus-list" id="priority-list"></div>
-        </section>
-
-        <aside class="signal-panel">
-          <h2 class="section-title">等待与决策 <small>需要持续盯住的事项</small></h2>
-          <div id="watch-list"></div>
-        </aside>
-      </div>
-
-      <section style="margin-top: 22px;">
-        <h2 class="section-title">项目组合 <small>阶段、下一动作、关键卡点与时点</small></h2>
-        <div class="table-wrap portfolio-table">
-          <table>
-            <thead>
-              <tr>
-                <th>项目</th>
-                <th>当前阶段</th>
-                <th>下一动作</th>
-                <th>关键卡点</th>
-                <th>时点</th>
-                <th>入口</th>
-              </tr>
-            </thead>
-            <tbody id="portfolio-list"></tbody>
-          </table>
+    <!-- Views -->
+    <!-- 本周优先 -->
+    <div id="priority" class="view active">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>本周优先推进</h2>
+          </div>
+          <span class="badge priority" id="priority-badge">加载中...</span>
         </div>
-      </section>
-    </section>
-
-    <section id="overview" class="view">
-      <div class="split">
-        <section>
-          <h2 class="section-title">本周焦点 <small>优先处理会改变项目走向的事项</small></h2>
-          <div class="focus-list">
-            <div class="focus-item">
-              <div class="focus-time">8 月 20 日前</div>
-              <div class="focus-copy">
-                <b>课匠堂 × 深圳前海产业集团</b>
-                <span>若仍未收到需求补充，轻量跟进客户对象、课程方向、时长、地点与日期。</span>
-              </div>
-              <a class="open-link" data-note="02_项目办公室/02_业务发展办公室/00_待立项机会/2026-08-17_课匠堂_深圳前海产业集团培训合作机会/00_Index.md" href="#">查看机会</a>
-            </div>
-            <div class="focus-item">
-              <div class="focus-time">等待确认</div>
-              <div class="focus-copy">
-                <b>海宁元安里电商供应链 AI 试点</b>
-                <span>等待陈平与孔总带回试点范围、内部负责人、预算、周期与验收意向。</span>
-              </div>
-              <a class="open-link" data-note="02_项目办公室/02_业务发展办公室/00_待立项机会/2026-08-08_海宁元安里电商供应链AI试点机会/00_Index.md" href="#">查看机会</a>
-            </div>
-            <div class="focus-item">
-              <div class="focus-time">持续更新</div>
-              <div class="focus-copy">
-                <b>课程网站</b>
-                <span>补齐新已发布文章公开链接，评估“企业外部操作系统”独立专题页。</span>
-              </div>
-              <a class="open-link" data-note="02_项目办公室/04_课程网站/00_Index.md" href="#">打开项目</a>
-            </div>
-          </div>
-        </section>
-
-        <aside class="signal-panel">
-          <h2 class="section-title">项目提醒 <small>先判断，再行动</small></h2>
-          <div class="signal">
-            <i class="signal-dot coral"></i>
-            <div>
-              <b>课匠堂机会尚未立项</b>
-              <span>当前只确认资料已发送与渠道方初步询问，未确认授课与付款。</span>
-            </div>
-          </div>
-          <div class="signal">
-            <i class="signal-dot gold"></i>
-            <div>
-              <b>元安里先收口试点条件</b>
-              <span>拿到真实样本与内部意向前，不把沟通记录写成付费确认。</span>
-            </div>
-          </div>
-          <div class="signal">
-            <i class="signal-dot teal"></i>
-            <div>
-              <b>网站已经进入持续经营</b>
-              <span>优先保证公开链接、内容同步和专题页取舍，而不是反复重做首页。</span>
-            </div>
-          </div>
-        </aside>
+        <div id="priority-list">加载中...</div>
       </div>
+    </div>
 
-      <section style="margin-top: 22px;">
-        <h2 class="section-title">项目流向 <small>不同性质的事项，走不同的工作路径</small></h2>
-        <div class="pipeline">
-          <div class="lane">
-            <div class="lane-label">机会判断</div>
-            <div class="lane-count" style="color: var(--sky);">7</div>
-            <div class="lane-note">客户、角色、付费或交付条件尚未收口</div>
+    <!-- 负责人工作台 -->
+    <div id="managers" class="view">
+      <div class="grid">
+        <!-- MBA项目负责人 -->
+        <div class="manager-card">
+          <div class="manager-header">
+            <h2 class="manager-name">MBA项目负责人</h2>
+            <span class="badge priority">🔴 高负载 · 2项</span>
           </div>
-          <div class="lane">
-            <div class="lane-label">项目推进</div>
-            <div class="lane-count" style="color: var(--teal);">5</div>
-            <div class="lane-note">长期主线与已确认项目工作现场</div>
+
+          <div class="manager-status">
+            <div class="manager-status-label">当前主线</div>
+            <div class="manager-status-value">论文终稿冲刺</div>
           </div>
-          <div class="lane">
-            <div class="lane-label">对外交付</div>
-            <div class="lane-count" style="color: var(--gold);">1</div>
-            <div class="lane-note">课程网站已发布，进入更新与转化运营</div>
+
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-item-title">
+                <span class="badge priority">紧急</span>
+                MBA论文终稿提交
+              </div>
+              <div class="task-item-desc">正文完成80%，参考文献整理中 · 8/28电子稿 · 风险: 参考文献格式</div>
+            </div>
+            <div class="task-item">
+              <div class="task-item-title">
+                <span class="badge priority">紧急</span>
+                8/30碰头会准备
+              </div>
+              <div class="task-item-desc">13:30–17:00 浙大管院 A823，准备汇报材料 · 卡点: 点评顺序、录音与纪要安排</div>
+            </div>
           </div>
-          <div class="lane">
-            <div class="lane-label">资料复用</div>
-            <div class="lane-count" style="color: var(--coral);">1</div>
-            <div class="lane-note">GPJ 用于演讲、PPT 与内容转化</div>
+
+          <div class="manager-note">
+            <div class="manager-note-label">工作方式</div>
+            <div class="manager-note-content">严格按学校要求,不过度承诺数据边界</div>
           </div>
         </div>
-      </section>
-    </section>
 
-    <section id="projects" class="view">
-      <h2 class="section-title">五条项目主线 <small>每个项目只有一个正式入口</small></h2>
-      <div class="project-grid">
-        <article class="project-card sky">
-          <div class="project-number">01</div>
-          <div>
-            <div class="project-top">
-              <h3>浙江大学 MBA</h3>
-              <span class="status sky">持续推进</span>
-            </div>
-            <p>论文研究、课程学习、学位事务与活动分享统一收口，论文项目保持独立事实链。</p>
-            <div class="next-line"><strong>下一步</strong><span>进入论文研究总入口，按当前 SOT 与任务进度继续。</span></div>
-            <a class="open-link" data-note="02_项目办公室/01_浙江大学MBA/00_Index.md" href="#">进入项目</a>
+        <!-- 产业业务与商业化负责人 -->
+        <div class="manager-card">
+          <div class="manager-header">
+            <h2 class="manager-name">产业业务与商业化负责人</h2>
+            <span class="badge warning">🟡 中高负载 · 7项</span>
           </div>
-        </article>
 
-        <article class="project-card">
-          <div class="project-number">02</div>
-          <div>
-            <div class="project-top">
-              <h3>业务发展办公室</h3>
-              <span class="status teal">聚焦成交</span>
-            </div>
-            <p>承接商业机会、AI 培训产品、书籍、OPC 空间、小程序、经营底座与对外投资。</p>
-            <div class="next-line"><strong>下一步</strong><span>优先推动前海培训与元安里 AI 试点的判断节点。</span></div>
-            <a class="open-link" data-note="02_项目办公室/02_业务发展办公室/00_Index.md" href="#">进入项目</a>
+          <div class="manager-status">
+            <div class="manager-status-label">当前主线</div>
+            <div class="manager-status-value">多条机会并行验证，元安里培训为本周重点</div>
           </div>
-        </article>
 
-        <article class="project-card gold">
-          <div class="project-number">03</div>
-          <div>
-            <div class="project-top">
-              <h3>家庭与成长</h3>
-              <span class="status gold">私密执行</span>
+          <div class="section-label">本周必做 (1项)</div>
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-item-title">
+                <span class="badge priority">紧急</span>
+                元安里9/1培训执行
+              </div>
+              <div class="task-item-desc">13:30–16:30 园区 AI 通识培训（暂定 5,000 元）· 8/29–30 检查课件设备 · ⭐⭐⭐ 已收费必须执行好</div>
             </div>
-            <p>保存家庭与孩子学习系统的访谈、方案、执行表与反馈，不混入个人公开表达。</p>
-            <div class="next-line"><strong>下一步</strong><span>把实际执行反馈回写到当前学习系统。</span></div>
-            <a class="open-link" data-note="02_项目办公室/03_家庭与成长/00_Index.md" href="#">进入项目</a>
           </div>
-        </article>
 
-        <article class="project-card coral">
-          <div class="project-number">04</div>
-          <div>
-            <div class="project-top">
-              <h3>课程网站</h3>
-              <span class="status coral">线上运行</span>
+          <div class="section-label">持续推进 (1项)</div>
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-item-title">
+                <span class="badge success">进行中</span>
+                餐饮情报日报持续交付
+              </div>
+              <div class="task-item-desc">每日出报中，收集刘帮反馈 · 完整跑通后推进收款确认</div>
             </div>
-            <p>单页网站已公网发布，内容同步机器人运行中，对外服务口径与页面内容在此管理。</p>
-            <div class="next-line"><strong>下一步</strong><span>补齐文章链接，确定是否建设独立专题页。</span></div>
-            <a class="open-link" data-note="02_项目办公室/04_课程网站/00_Index.md" href="#">进入项目</a>
           </div>
-        </article>
 
-        <article class="project-card">
-          <div class="project-number">05</div>
-          <div>
-            <div class="project-top">
-              <h3>GPJ</h3>
-              <span class="status teal">资料复用</span>
+          <div class="section-label">探讨验证 (2项)</div>
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-item-title">
+                <span class="badge info">探讨中</span>
+                西城心旅方法论会谈
+              </div>
+              <div class="task-item-desc">8/28会谈后决定是否立项 · 机会验证</div>
             </div>
-            <p>原始资料、交流会议、内容转化与项目交付分层保存，守住署名和材料边界。</p>
-            <div class="next-line"><strong>下一步</strong><span>按具体任务进入演讲、PPT 或内容转化入口。</span></div>
-            <a class="open-link" data-note="02_项目办公室/05_GPJ/00_导航/00_HOME.md" href="#">进入项目</a>
+            <div class="task-item">
+              <div class="task-item-title">
+                <span class="badge accent">待约</span>
+                徐总物流AI赋能
+              </div>
+              <div class="task-item-desc">待约现场沟通时间 · 与徐总确认</div>
+            </div>
           </div>
-        </article>
+
+          <div class="section-label">等待反馈 (3项)</div>
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-item-title">陈昂团队机会</div>
+              <div class="task-item-desc">等待陈昂与董事长沟通结果 · 已等待15天</div>
+            </div>
+            <div class="task-item">
+              <div class="task-item-title">瑞幸门店转租</div>
+              <div class="task-item-desc">等待重新约见 · 已等待10天</div>
+            </div>
+            <div class="task-item">
+              <div class="task-item-title">课匠堂 × 深圳前海</div>
+              <div class="task-item-desc">8/20前等待需求补充，若仍未回复需轻量跟进</div>
+            </div>
+          </div>
+
+          <div class="manager-note">
+            <div class="manager-note-label">最近学到的经验</div>
+            <div class="manager-note-content">从海宁元安里案例学到: 园区合作要分阶段验证,先培训明确需求再谈场景试点;定价要有底线,半天培训不低于5000元</div>
+          </div>
+        </div>
+
+        <!-- 内容主编 -->
+        <div class="manager-card">
+          <div class="manager-header">
+            <h2 class="manager-name">内容主编</h2>
+            <span class="badge success">🟢 正常负载 · 3项</span>
+          </div>
+
+          <div class="manager-status">
+            <div class="manager-status-label">当前主线</div>
+            <div class="manager-status-value">公众号长文创作，贴图机制已调整为不日更</div>
+          </div>
+
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-item-title">
+                <span class="badge accent">待审核</span>
+                公众号文章2篇待审核
+              </div>
+              <div class="task-item-desc">内容主编已完成，等李凯审核后发布</div>
+            </div>
+            <div class="task-item">
+              <div class="task-item-title">
+                <span class="badge success">创作中</span>
+                1篇书稿改文章
+              </div>
+              <div class="task-item-desc">创作中</div>
+            </div>
+            <div class="task-item">
+              <div class="task-item-title">
+                <span class="badge warning">机制调整</span>
+                公众号内容机制调整
+              </div>
+              <div class="task-item-desc">停止日更贴图，第19周以长文和真实场景内容为主 · 083至089已生成但未发布</div>
+            </div>
+          </div>
+
+          <div class="manager-note">
+            <div class="manager-note-label">工作方式</div>
+            <div class="manager-note-content">长文优先,对外发布经李凯审核,保持个人品牌调性</div>
+          </div>
+        </div>
+
+        <!-- 课程网站负责人 -->
+        <div class="manager-card">
+          <div class="manager-header">
+            <h2 class="manager-name">课程网站负责人</h2>
+            <span class="badge success">🟢 低负载 · 1项</span>
+          </div>
+
+          <div class="manager-status">
+            <div class="manager-status-label">当前主线</div>
+            <div class="manager-status-value">网站已发布，进入持续更新阶段</div>
+          </div>
+
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-item-title">
+                <span class="badge accent">等待指令</span>
+                网站内容同步
+              </div>
+              <div class="task-item-desc">等待内容同步指令，补齐新发布文章公开链接</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <section id="opportunities" class="view">
-        <h2 class="section-title">机会雷达 <small id="opportunity-source">以机会卡为准</small></h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>机会</th>
-              <th>当前阶段</th>
-              <th>最近更新</th>
-              <th>入口</th>
-            </tr>
-          </thead>
-          <tbody id="opportunity-list"></tbody>
-        </table>
+    <!-- 等待反馈 -->
+    <div id="waiting" class="view">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>等待外部反馈</h2>
+          </div>
+          <span class="badge info" id="waiting-badge">加载中...</span>
+        </div>
+        <div id="waiting-list">加载中...</div>
       </div>
-    </section>
+    </div>
 
-    <p class="footnote">项目指挥面板汇总最新复盘和待立项机会；项目状态与最终成品以对应正式文件为准。</p>
-  </main>
+    <!-- 决策节点 -->
+    <div id="decision" class="view">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>决策判断点</h2>
+          </div>
+          <span class="badge warning" id="decision-badge">加载中...</span>
+        </div>
+        <div id="decision-list">加载中...</div>
+      </div>
+    </div>
+
+    <!-- 机会雷达 -->
+    <div id="opportunities" class="view">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>待立项机会雷达</h2>
+          </div>
+          <span class="badge success" id="opp-badge">加载中...</span>
+        </div>
+        <div style="color: var(--text-secondary); margin-bottom: var(--space-6); font-size: 15px;">
+          持续观察中的业务机会
+        </div>
+        <div id="opp-list">加载中...</div>
+      </div>
+    </div>
+
+    <!-- 全部项目 -->
+    <div id="all" class="view">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>全部项目组合</h2>
+          </div>
+          <span class="badge accent" id="all-badge">加载中...</span>
+        </div>
+        <div id="all-list">加载中...</div>
+      </div>
+    </div>
+  </div>
 
   <script src="workbench-auth.js"></script>
   <script>
     window.renderWorkbench = function () {
       var vault = "MAXNOTE";
-      var tabs = document.querySelectorAll(".tab");
-      var views = document.querySelectorAll(".view");
-      var data = window.PROJECT_WORKBENCH_DATA || {};
 
-      function toObsidianUrl(path) {
-        return "obsidian://open?vault=" + encodeURIComponent(vault) + "&file=" + encodeURIComponent(path);
+      function switchTab(viewId) {
+        document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
+
+        event.target.classList.add('active');
+        document.getElementById(viewId).classList.add('active');
       }
 
-      function escapeHtml(value) {
-        return String(value || "").replace(/[&<>"']/g, function (character) {
-          return {
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            "\"": "&quot;",
-            "'": "&#39;"
-          }[character];
-        });
+      window.switchTab = switchTab;
+
+      function renderProjectItem(item) {
+        const bucketClass = item.bucket || 'accent';
+        return `
+          <div class="project-item">
+            <div class="project-header">
+              <div class="project-title">
+                <span class="badge ${bucketClass}">${item.label}</span>
+              </div>
+            </div>
+            <div class="project-desc">${item.title}</div>
+            <div class="project-meta">
+              <div class="project-meta-item"><strong>阶段:</strong> ${item.stage}</div>
+              <div class="project-meta-item"><strong>时限:</strong> ${item.due}</div>
+              ${item.blocker ? `<div class="project-meta-item" style="flex-basis: 100%;"><strong>卡点:</strong> ${item.blocker}</div>` : ''}
+            </div>
+          </div>
+        `;
       }
 
-      function tagClass(status) {
-        if (/暂缓|终止|停止/.test(status)) {
-          return "pause";
-        }
-        if (/试运行/.test(status)) {
-          return "trial";
-        }
-        if (/尽调|评估/.test(status)) {
-          return "review";
-        }
-        if (/验证/.test(status)) {
-          return "verify";
-        }
-        return "confirm";
+      function renderOpportunityItem(opp) {
+        return `
+          <div class="project-item">
+            <div class="project-header">
+              <div class="project-title">${opp.title}</div>
+              <span class="badge success">${opp.status}</span>
+            </div>
+            <div class="project-desc">更新: ${opp.updated}</div>
+          </div>
+        `;
       }
 
       function renderOperations() {
-        var review = data.review || {};
-        var buckets = data.buckets || {};
-        var priorities = buckets.priority || [];
-        var waiting = buckets.waiting || [];
-        var decisions = buckets.decision || [];
-        var paused = buckets.paused || [];
-        var unrouted = buckets.unrouted || [];
-        var portfolio = data.portfolio || [];
-        var opportunities = data.opportunities || [];
-        var priorityList = document.getElementById("priority-list");
-        var watchList = document.getElementById("watch-list");
-        var portfolioList = document.getElementById("portfolio-list");
-        var opportunityList = document.getElementById("opportunity-list");
-        var reviewDate = review.date || "--";
-        var snapshotDate = data.snapshot_date || reviewDate;
+        const data = window.PROJECT_WORKBENCH_DATA;
 
-        document.getElementById("dashboard-date").textContent = snapshotDate.split("-").join(".");
-        document.getElementById("dashboard-date-note").textContent = snapshotDate === "--" ? "项目数据待刷新" : "工作台刷新快照";
-        document.getElementById("priority-count").textContent = priorities.length;
-        document.getElementById("waiting-count").textContent = waiting.length;
-        document.getElementById("decision-count").textContent = decisions.length;
-        document.getElementById("paused-count").textContent = paused.length;
-        document.getElementById("review-source").textContent = reviewDate === "--" ? "未找到每日复盘" : "参考：" + reviewDate + " 每日复盘；项目状态按当前确认口径更新";
-        document.getElementById("opportunity-source").textContent = opportunities.length + " 条机会卡已汇总";
-
-        priorityList.innerHTML = priorities.length
-          ? priorities.map(function (task) {
-              return (
-                '<div class="focus-item">' +
-                  '<div class="focus-time">' + escapeHtml(task.due) + "</div>" +
-                  '<div class="focus-copy"><b>' + escapeHtml(task.label) + "：" + escapeHtml(task.title) + "</b><span>关键卡点：" + escapeHtml(task.blocker) + "</span></div>" +
-                  '<a class="open-link" href="' + toObsidianUrl(task.path) + '">进入项目</a>' +
-                "</div>"
-              );
-            }).join("")
-          : '<div class="focus-item"><div class="focus-copy"><b>暂无被标记为优先推进的事项。</b></div></div>';
-
-        function watchRows(items, tone, heading) {
-          return items.map(function (task) {
-            return (
-              '<div class="signal">' +
-                '<i class="signal-dot ' + tone + '"></i>' +
-                "<div><b>" + heading + " · " + escapeHtml(task.label) + "</b>" +
-                "<span>" + escapeHtml(task.title) + "</span>" +
-                '<a class="open-link" href="' + toObsidianUrl(task.path) + '">打开项目</a></div>' +
-              "</div>"
-            );
-          }).join("");
+        if (!data) {
+          console.error('数据文件未加载');
+          return;
         }
 
-        watchList.innerHTML =
-          watchRows(waiting, "sky", "等待外部") +
-          watchRows(decisions, "gold", "需明确边界") +
-          watchRows(paused, "coral", "暂停") +
-          watchRows(unrouted, "coral", "待归类");
+        // 更新快照日期 - 使用今天的日期
+        document.getElementById('snapshot-date').textContent = '2026-09-02';
 
-        if (!watchList.innerHTML) {
-          watchList.innerHTML = '<div class="signal"><i class="signal-dot teal"></i><div><b>暂无等待或需决策事项</b></div></div>';
-        }
+        // 更新统计数字
+        document.getElementById('priority-count').textContent = data.buckets.priority.length;
+        document.getElementById('waiting-count').textContent = data.buckets.waiting.length;
+        document.getElementById('decision-count').textContent = data.buckets.decision.length;
+        document.getElementById('opp-count').textContent = data.opportunities.length;
 
-        portfolioList.innerHTML = portfolio.length
-          ? portfolio.map(function (task) {
-              return (
-                "<tr>" +
-                  "<td><strong>" + escapeHtml(task.label) + "</strong><span class=\"muted\">" + escapeHtml(task.bucket === "priority" ? "优先推进" : task.bucket === "waiting" ? "等待外部" : task.bucket === "decision" ? "待明确边界" : "暂停 / 归档") + "</span></td>" +
-                  '<td><span class="tag ' + tagClass(task.stage) + '">' + escapeHtml(task.stage) + "</span></td>" +
-                  "<td>" + escapeHtml(task.title) + "</td>" +
-                  "<td>" + escapeHtml(task.blocker) + "</td>" +
-                  "<td>" + escapeHtml(task.due) + "</td>" +
-                  '<td><a class="open-link" href="' + toObsidianUrl(task.path) + '">打开</a></td>' +
-                "</tr>"
-              );
-            }).join("")
-          : '<tr><td colspan="6">暂无可汇总的项目事项。</td></tr>';
+        // 更新徽章
+        document.getElementById('priority-badge').textContent = `${data.buckets.priority.length}项`;
+        document.getElementById('waiting-badge').textContent = `${data.buckets.waiting.length}项`;
+        document.getElementById('decision-badge').textContent = `${data.buckets.decision.length}项`;
+        document.getElementById('opp-badge').textContent = `${data.opportunities.length}个机会`;
+        document.getElementById('all-badge').textContent = `${data.portfolio.length}项`;
 
-        opportunityList.innerHTML = opportunities.length
-          ? opportunities.map(function (opportunity) {
-              return (
-                "<tr>" +
-                  "<td><strong>" + escapeHtml(opportunity.title) + "</strong><span>待立项机会</span></td>" +
-                  '<td><span class="tag ' + tagClass(opportunity.status) + '">' + escapeHtml(opportunity.status) + "</span></td>" +
-                  "<td>" + escapeHtml(opportunity.updated || "--") + "</td>" +
-                  '<td><a class="open-link" href="' + toObsidianUrl(opportunity.path) + '">打开</a></td>' +
-                "</tr>"
-              );
-            }).join("")
-          : '<tr><td colspan="4">暂无可汇总的机会卡。</td></tr>';
+        // 渲染本周优先
+        const priorityHtml = data.buckets.priority.length > 0
+          ? data.buckets.priority.map(renderProjectItem).join('')
+          : '<div style="color: var(--text-tertiary); padding: var(--space-8); text-align: center;">暂无优先项目</div>';
+        document.getElementById('priority-list').innerHTML = priorityHtml;
+
+        // 渲染等待反馈
+        const waitingHtml = data.buckets.waiting.length > 0
+          ? data.buckets.waiting.map(renderProjectItem).join('')
+          : '<div style="color: var(--text-tertiary); padding: var(--space-8); text-align: center;">暂无等待项目</div>';
+        document.getElementById('waiting-list').innerHTML = waitingHtml;
+
+        // 渲染决策节点
+        const decisionHtml = data.buckets.decision.length > 0
+          ? data.buckets.decision.map(renderProjectItem).join('')
+          : '<div style="color: var(--text-tertiary); padding: var(--space-8); text-align: center;">暂无决策节点</div>';
+        document.getElementById('decision-list').innerHTML = decisionHtml;
+
+        // 渲染机会雷达
+        const oppHtml = data.opportunities.length > 0
+          ? data.opportunities.map(renderOpportunityItem).join('')
+          : '<div style="color: var(--text-tertiary); padding: var(--space-8); text-align: center;">暂无待立项机会</div>';
+        document.getElementById('opp-list').innerHTML = oppHtml;
+
+        // 渲染全部项目
+        const allHtml = data.portfolio.length > 0
+          ? data.portfolio.map(renderProjectItem).join('')
+          : '<div style="color: var(--text-tertiary); padding: var(--space-8); text-align: center;">暂无项目</div>';
+        document.getElementById('all-list').innerHTML = allHtml;
       }
 
-      document.querySelectorAll("[data-note]").forEach(function (link) {
-        var path = link.getAttribute("data-note");
-        link.href = toObsidianUrl(path);
+      // 页面加载时渲染数据
+      document.addEventListener('DOMContentLoaded', function() {
+        renderOperations();
       });
-
-      tabs.forEach(function (tab) {
-        tab.addEventListener("click", function () {
-          var target = tab.getAttribute("data-view");
-          tabs.forEach(function (item) {
-            item.setAttribute("aria-selected", String(item === tab));
-          });
-          views.forEach(function (view) {
-            view.classList.toggle("active", view.id === target);
-          });
-        });
-      });
-
       renderOperations();
     };
   </script>
